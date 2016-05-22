@@ -12,8 +12,6 @@ describe 'application launch', ->
   app   = null
 
   beforeEach () ->
-    console.log  new Date().getTime()
-
     helpers.startApplication  args: [appPath], (_app)->
       app = _app
 
@@ -21,7 +19,7 @@ describe 'application launch', ->
   #  helpers.stopApplication ->
   #    done()
 
-  it 'shows an initial window abc', ->
+  it 'shows an initial window', ->
     app.isRunning().assert_Is_True()
     app.client.getWindowCount()
               .then (count) ->

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register -- recursive test"
   },
-  "author": "",
+  "author": "Dinis Cruz",
   "license": "ISC",
   "dependencies": {
     "electron-chromedriver": "^1.1.0",

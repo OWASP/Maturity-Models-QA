@@ -31,8 +31,6 @@ class Global_Setup
   stopApplication: (callback) =>
     if !@.app or !@.app.isRunning()
       return
-    @.app.stop().then =>
-      callback()
-      #assert.equal @.app.isRunning(), false
+    @.app.stop()
 
 module.exports = new Global_Setup()

@@ -14,6 +14,8 @@ module.exports = function ( ) {
         env: {
             type: 'node'
         },
-        debug:false
+        workers: {
+            recycle: true
+        }
     };
 };

@@ -1,10 +1,6 @@
 require 'fluentnode'
 
 Application = require('spectron').Application
-path        = require('path')
-
-assert      = require('assert')
-#chai   = require('chai')
 
 class Global_Setup
   constructor: (options)->

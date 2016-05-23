@@ -8,7 +8,7 @@ wait = ()->
 describe 'Spectron-API tests',->
 
   @.timeout 8000
-  
+
   spectron = null;
 
   before ->
@@ -19,7 +19,22 @@ describe 'Spectron-API tests',->
     wait().then ->
       spectron.stop()
 
-  it 'start window manually', ->
+  it 'open', ->
+    using spectron, ->
+      @.window().showInactive()
+      #@.open 'https://www.google.com'
+      @.window().loadURL('https://www.google.co.uk')
+      @.client().waitUntilWindowLoaded()
+        .then =>
+            @.client().getTitle().then (title)=>
+              title.assert_Is ''
+              @.window().getURL().then (url)=>
+                console.log url
+                url.assert_Contains 'https://www.google.co.uk'
+
+
+
+  xit 'start window manually', ->
     spectron.setup()
     using spectron, ->
       @.start()

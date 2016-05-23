@@ -12,7 +12,11 @@ class Spectron_API
     
   is_Running: =>
     @.app?.isRunning() || false
-    
+
+  open: (url)=>
+    @.window().loadURL(url)
+    @.window().waitUntilWindowLoaded()
+
   setup: =>
     @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
     @.options.args ?= [ __dirname.path_Combine '../electron-apps/about-blank' ]

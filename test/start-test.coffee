@@ -22,11 +22,11 @@ describe 'application launch', ->
   afterEach ()->
     helpers.stopApplication()
 
-  xit 'gets window count', ()->
+  it 'gets window count', ()->
     app.isRunning().assert_Is_True()
     app.client.getWindowCount()
               .then (count) ->
-                count.assert_Is 3
+                count.assert_Is 2
 
   it 'show an initial window', ()->
     using app.browserWindow, ->
@@ -40,14 +40,13 @@ describe 'application launch', ->
     app.client.windowByIndex(1)
       .then -> app.client.getTitle()
       .then (title)->
-        title.assert_Is 'aaa'
+        title.assert_Is 'Google'
 
   it 'check HTML', ()->
     app.client.windowByIndex(1)
       .then -> app.client.getHTML('*')
       .then (text)->
-        console.log text
-        text.assert_Is 'aaa'
+        text[0].assert_Contains 'Google'
       
 #              .getText('body').then (text)->
 #                assert.equal text, 'aaa'

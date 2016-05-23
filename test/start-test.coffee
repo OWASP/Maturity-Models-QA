@@ -76,3 +76,19 @@ describe 'test browserwindow and client', ->
       .then -> global_Setup.app.client.getHTML('*')
       .then (text)->
         text[0].assert_Contains 'Google'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+

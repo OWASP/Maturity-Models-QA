@@ -1,4 +1,4 @@
-Spectron_API = require '../../src/Spectron-API'
+Spectron_API = require '../src/Spectron-API'
 
 describe 'constructor',->
     it 'constructor', ->
@@ -25,7 +25,7 @@ describe 'constructor',->
           @.connectionRetryCount.assert_Is 10
           @.nodePath            .assert_Is process.execPath
           @.env                 .assert_Is {}
-          @.workingDirectory    .assert_Is __dirname.path_Combine('../..')
+          @.workingDirectory    .assert_Is __dirname.path_Combine('..')
           @.api.app             .assert_Is @
           @.api.requireName     .assert_Is 'require'
           @.transferPromiseness .assert_Is_Function()
@@ -59,6 +59,15 @@ describe 'constructor',->
           @.app.client.getTitle().then (title)=>
             title.assert_Is 'Electron App - with WebView'
             @.stop()
+
+    it 'check Html', ->
+      @.timeout 4000
+      using new Spectron_API().setup(), ->
+        @.start().then =>
+          @.app.client.windowByIndex(1).then =>
+            @.app.client.getHTML('*').then (html)=>
+              html.first().assert_Contains('Google')
+              @.stop()
 
 
 

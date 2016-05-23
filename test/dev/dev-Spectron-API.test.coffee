@@ -19,20 +19,12 @@ describe 'Spectron-API tests',->
     wait().then ->
       spectron.stop()
 
-  it 'open', ->
-    using spectron, ->
-      @.window().showInactive()
-      #@.open 'https://www.google.com'
-      @.window().loadURL('https://www.google.co.uk')
-      @.client().waitUntilWindowLoaded()
-        .then =>
-            @.client().getTitle().then (title)=>
-              title.assert_Is ''
-              @.window().getURL().then (url)=>
-                console.log url
-                url.assert_Contains 'https://www.google.co.uk'
-
-
+  it.only 'open (BBC news)', ->
+    url = 'http://news.bbc.co.uk'
+    using spectron.show(), ->
+      @.open(url).then =>
+        @.window().getURL().then (url)=>
+            url.assert_Is url
 
   xit 'start window manually', ->
     spectron.setup()

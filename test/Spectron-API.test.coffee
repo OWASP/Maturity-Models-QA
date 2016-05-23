@@ -4,12 +4,16 @@ describe 'Spectron-API',->
 
   spectron = null;
 
+  @.timeout 4000
+  
   before ->
     spectron = new Spectron_API().setup()
     spectron.start()
 
   after ->
     spectron.stop()
+
+
 
   it 'constructor', ->
     using new Spectron_API(), ->
@@ -22,6 +26,14 @@ describe 'Spectron-API',->
   it 'isRunning', ->
     using spectron, ->
       @.is_Running().assert_Is_True()
+
+  it.only 'open (BBC news)', ->
+    url = 'http://news.bbc.co.uk'
+    using spectron.show(), ->
+      @.open url
+      .then =>
+        @.window().getURL().then (url)=>
+          url.assert_Is url
 
   it 'setup', ->
     using new Spectron_API(), ->
@@ -46,9 +58,15 @@ describe 'Spectron-API',->
               .assert_Folder_Exists()
               .assert_Contains 'electron-apps/about-blank'
 
+  it 'show', ->
+    using spectron,->
+      @.window().isVisible().then (value)=>
+        value.assert_Is_False()
+        @.show()
+        @.window().isVisible().then (value)=>
+          value.assert_Is_True()
 
   it 'start, stop', ()->
-    @.timeout 4000
     using new Spectron_API().setup(), ->
       @.start().then =>
         @.is_Running().assert_Is_True()
@@ -69,7 +87,6 @@ describe 'Spectron-API',->
 
     it 'check title and html', ->
       webview = [ __dirname.path_Combine '../electron-apps/web-view' ]
-      @.timeout 4000
       using new Spectron_API(), ->
         @.options.args = webview
         @.setup().start().then =>                                     # create chrome and start with web-view electron app

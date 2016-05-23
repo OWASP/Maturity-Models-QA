@@ -15,7 +15,7 @@ class Spectron_API
 
   open: (url)=>
     @.window().loadURL(url)
-    @.window().waitUntilWindowLoaded()
+    @.client().waitUntilWindowLoaded()      
 
   setup: =>
     @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
@@ -23,6 +23,10 @@ class Spectron_API
     @.app           = new @.Application @.options
     @
 
+  show: =>
+    @.window().showInactive()
+    @
+    
   start: =>
     @.app.start()
 

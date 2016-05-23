@@ -8,10 +8,11 @@ app.on('ready', function () {
         show      : false,
         //center    : true,
         x         : 100,
-        y         : -1500,
+        y         : -1000,
         width     : 800,
-        height    : 400
+        height    : 500
     })
-    mainWindow.loadURL('file://' + __dirname + '/..web-view/index.html')
+    mainWindow.loadURL('about:about')
+
     mainWindow.on('closed', function () { mainWindow = null })
 })

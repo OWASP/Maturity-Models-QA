@@ -14,9 +14,9 @@ class Spectron_API
     @.app?.isRunning() || false
     
   setup: =>
-    @.options.path = @.root_Path.path_Combine 'node_modules/.bin/electron'
-    @.options.args = [ __dirname.path_Combine '../electron-apps/web-view' ]
-    @.app          = new @.Application @.options
+    @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
+    @.options.args ?= [ __dirname.path_Combine '../electron-apps/about-blank' ]
+    @.app           = new @.Application @.options
     @
 
   start: =>
@@ -24,5 +24,8 @@ class Spectron_API
 
   stop: =>
     @.app.stop()
+
+  client: => @.app?.client
+  window: => @.app?.browserWindow
 
 module.exports =   Spectron_API

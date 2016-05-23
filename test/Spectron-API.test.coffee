@@ -34,7 +34,7 @@ describe 'constructor',->
                 .assert_Contains '.bin/electron'
           @.args.assert_Size_Is(1).first()
                 .assert_Folder_Exists()
-                .assert_Contains 'electron-apps/web-view'
+                .assert_Contains 'electron-apps/about-blank'
 
 
     it 'start and stop', ()->
@@ -49,32 +49,25 @@ describe 'constructor',->
     it 'expected files inside electron-apps/web-view folder', ->
       using new Spectron_API().setup(), ->
         app_Folder = @.options.args.first()
-        app_Folder.assert_Folder_Exists().assert_Contains '/electron-apps/web-view'
-                  .files().file_Names()  .assert_Contains ['index.html', 'main.js', 'package.json', 'web-view.html']
+        app_Folder.assert_Folder_Exists().assert_Contains '/electron-apps/about-blank'
+                  .files().file_Names()  .assert_Contains [ 'main.js', 'package.json']
 
-    it 'check title', ->
+    it 'check title and html', ->
+      webview = [ __dirname.path_Combine '../electron-apps/web-view' ]
       @.timeout 4000
-      using new Spectron_API().setup(), ->
-        @.start().then =>
-          @.app.client.getTitle().then (title)=>
+      using new Spectron_API(), ->
+        @.options.args = webview
+        @.setup().start().then =>                                     # create chrome and start with web-view electron app
+          @.app.client.getTitle().then (title)=>                      # get title of host window
             title.assert_Is 'Electron App - with WebView'
-            @.stop()
 
-    it 'check Html', ->
-      @.timeout 4000
-      using new Spectron_API().setup(), ->
-        @.start().then =>
-          @.app.client.windowByIndex(1).then =>
             @.app.client.getHTML('*').then (html)=>
-              html.first().assert_Contains('Google')
-              @.stop()
+              html.first().assert_Contains('<webview id="google" ')   # confirm we are in the electron window
 
-
-
-
-
-
-
+              @.app.client.windowByIndex(1).then =>
+                @.app.client.getHTML('*').then (html)=>
+                  html.first().assert_Contains('Google')              # get html of webv-iew
+                  @.stop()
 
 
 

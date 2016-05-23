@@ -25,4 +25,4 @@ describe 'application launch', ->
     #app.isRunning().assert_Is_True()
     app.client.getWindowCount()
               .then (count) ->
-                assert.equal count, 42
+                assert.equal count, 2

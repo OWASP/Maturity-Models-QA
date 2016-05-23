@@ -4,16 +4,19 @@ spectron = require 'spectron'
 
 class Spectron_API
   
-  constructor: ->
+  constructor: (options)->
+    @.options     = options || {}
     @.Application = spectron.Application
     @.app         = null
-
-  default_App_Path: ->
-    __dirname.path_Combine('../electron-apps/web-view')
-
+    @.root_Path   = wallaby?.localProjectDir || __dirname.path_Combine '../'        
+    
+  is_Running: =>
+    @.app?.isRunning() || false
+    
   setup: =>
-    options = path : @.default_App_Path
-    @.app = new @.Application options
+    @.options.path = @.root_Path.path_Combine 'node_modules/.bin/electron'
+    @.options.args = [ __dirname.path_Combine '../electron-apps/web-view' ]
+    @.app          = new @.Application @.options
     @
 
   start: =>

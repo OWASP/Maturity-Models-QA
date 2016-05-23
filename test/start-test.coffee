@@ -1,6 +1,6 @@
 assert      = require('assert')
 
-Global_Setup = require('../../src/global-setup')
+Global_Setup = require('../src/global-setup')
 
 
 describe 'Global_Setup', ->

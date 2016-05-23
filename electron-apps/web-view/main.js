@@ -6,11 +6,10 @@ var mainWindow = null
 app.on('ready', function () {
   mainWindow = new BrowserWindow({
     show      : false,
-    center    : true,
-    width     : 800,
+    //x         : 100,
+    //y         : -1500,
+    width     : 400,
     height    : 400,
-    minHeight : 100,
-    minWidth  : 100
   })
   mainWindow.loadURL('file://' + __dirname + '/index.html')
   mainWindow.on('closed', function () { mainWindow = null })

@@ -14,7 +14,7 @@ class Global_Setup
     root_Path = wallaby?.localProjectDir || __dirname.path_Combine '../'
     return root_Path.path_Combine 'node_modules/.bin/electron'
 
-  startApplication: (options, callback) ->
+  startApplication: (options) ->
     options.path = @.getElectronPath()
 
     #if process.env.CI
@@ -25,9 +25,8 @@ class Global_Setup
     @.app.start()
          .then =>
             assert.equal @.app.isRunning(), true
-            callback(@.app)
             #chaiAsPromised.transferPromiseness = @.app.transferPromiseness
-            #return @.app
+            return @.app
 
   stopApplication: (callback) =>
     if !@.app or !@.app.isRunning()

@@ -11,7 +11,7 @@
   "dependencies": {
     "electron-chromedriver": "^1.1.0",
     "electron-prebuilt": "^1.1.1",
-    "fluentnode": "^0.5.5",
+    "fluentnode": "^0.6.1",
     "mocha": "^2.4.5",
     "spectron": "^3.1.0"
   }

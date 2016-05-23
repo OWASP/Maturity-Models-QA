@@ -1,6 +1,7 @@
-helpers = require('../src//global-setup')
+assert      = require('assert')
 
-appPath = __dirname.path_Combine('../electron-apps/web-view')
+helpers = require('../src/global-setup')
+appPath = __dirname.path_Combine '../electron-apps/web-view'
 
 describe 'check values', ->
 
@@ -11,16 +12,17 @@ describe 'application launch', ->
 
   app   = null
 
-  beforeEach () ->
-    helpers.startApplication  args: [appPath], (_app)->
-      app = _app
+  beforeEach () -> 
+    helpers.startApplication  args: [appPath]
+           .then (_app)-> 
+              app = _app              
 
-  #afterEach (done)->
-  #  helpers.stopApplication ->
-  #    done()
+  afterEach (done)->
+    helpers.stopApplication ()->
+      done()
 
-  it 'shows an initial window', ->
-    app.isRunning().assert_Is_True()
+  it 'shows an initial window', ()->
+    #app.isRunning().assert_Is_True()
     app.client.getWindowCount()
               .then (count) ->
-                assert.equal count, 2
+                assert.equal count, 42

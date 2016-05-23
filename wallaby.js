@@ -6,7 +6,7 @@ module.exports = function ( ) {
         ],
 
         tests: [
-            'test/**/*.coffee'
+            'test/dev/**/*.coffee'
         ],
 
         testFramework: 'mocha',

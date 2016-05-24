@@ -1,6 +1,6 @@
 require 'fluentnode'
 
-Spectron_API = require 'electrium'
+Spectron_API = require('electrium').Spectron_API
 
 class Browser_API
   constructor: ->

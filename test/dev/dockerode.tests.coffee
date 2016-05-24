@@ -116,4 +116,20 @@ describe.only 'dockerode tests', ()->
       docker.modem.followProgress(stream, onFinished, onProgress)
 
 
-  
+  @.timeout 60000
+  it 'pull and run diniscruz/bsimm-graphs ', (done)->
+    repoTag = 'diniscruz/bsimm-graphs:latest'
+    docker = create_Docker()
+
+    onFinished = (err, output) ->
+      assert_Is_Null err
+      console.log output.last()
+      output.last().status.assert_Contains repoTag
+      done()
+
+    onProgress = (event) ->
+      if ['Already exists', 'Waiting', 'Extracting', 'Pull complete', 'Downloading', 'Download complete'].not_Contains event.status
+        console.log "#{event.status} - #{event.id}"
+
+    docker.pull repoTag, (err, stream) ->
+      docker.modem.followProgress(stream, onFinished, onProgress)

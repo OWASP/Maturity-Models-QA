@@ -1,6 +1,7 @@
 require 'fluentnode'
 
 Docker = require('dockerode')
+MemoryStream = require 'memorystream'
 fs     = require 'fs'
 
 describe.only 'dockerode tests', ()->
@@ -53,7 +54,7 @@ describe.only 'dockerode tests', ()->
       images.assert_Size_Is_Bigger_Than 10
       done()
 
-  it 'check environment variables', ->
+  xit 'check environment variables', ->
     console.log 'DOCKER_TLS_VERIFY ' + process.env.DOCKER_TLS_VERIFY
     console.log 'DOCKER_HOST ' + process.env.DOCKER_HOST
     console.log 'DOCKER_CERT_PATH ' + process.env.DOCKER_CERT_PATH
@@ -63,10 +64,6 @@ describe.only 'dockerode tests', ()->
       console.log '---------'
       console.log @
       console.log '---------'
-    #export DOCKER_TLS_VERIFY="1"
-    #export DOCKER_HOST="tcp://192.168.99.100:2376"
-    #export DOCKER_CERT_PATH="/Users/diniscruz/.docker/machine/machines/default"
-    #export DOCKER_MACHINE_NAME="default"
 
   xit 'list images', (done)->
     using new Docker(), ->
@@ -94,7 +91,7 @@ describe.only 'dockerode tests', ()->
     return new Docker(options)
 
 
-  @.timeout 20000
+  @.timeout 60000
   it 'pull repo', (done)->
     repoTag = 'ubuntu:latest' #'ubuntu:14.04'
 
@@ -103,7 +100,7 @@ describe.only 'dockerode tests', ()->
     onFinished = (err, output) ->
       assert_Is_Null err
       console.log output.last()
-      output.last().assert_Is { status: 'Status: Image is up to date for ubuntu:latest' }
+      output.last().status.assert_Contains repoTag
       done()
 
     onProgress = (event) ->
@@ -116,8 +113,7 @@ describe.only 'dockerode tests', ()->
       docker.modem.followProgress(stream, onFinished, onProgress)
 
 
-  @.timeout 60000
-  it 'pull and run diniscruz/bsimm-graphs ', (done)->
+  it 'pull diniscruz/bsimm-graphs ', (done)->
     repoTag = 'diniscruz/bsimm-graphs:latest'
     docker = create_Docker()
 
@@ -136,3 +132,24 @@ describe.only 'dockerode tests', ()->
 
     docker.pull repoTag, (err, stream) ->
       docker.modem.followProgress(stream, onFinished, onProgress)
+
+  it 'run ubunto commands ', (done)->
+    docker = create_Docker()
+
+    memStream = new MemoryStream();
+    output = '';
+    memStream.on 'data', (data)->
+      output += data.toString()
+
+    docker.run 'ubuntu', ['bash', '-c', 'uname -a'], memStream,  (err, data, container)->
+
+      console.log output
+
+      data.StatusCode.assert_Is 0
+      container.stop (err)->
+        err.message.assert_Is 'HTTP code is 304 which indicates error: container already stopped - '
+        container.remove (err)->
+          assert_Is_Null err
+          container.remove (err)->
+            console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
+            done()

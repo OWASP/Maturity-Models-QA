@@ -13,6 +13,7 @@
     "electron-chromedriver": "^1.1.0",
     "electron-prebuilt": "^1.1.1",
     "fluentnode": "^0.6.1",
+    "memorystream": "^0.3.1",
     "mocha": "^2.5.1",
     "nesh": "^1.6.0",
     "spectron": "^3.1.0"

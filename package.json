@@ -9,7 +9,7 @@
   "author": "Dinis Cruz",
   "license": "ISC",
   "dependencies": {
-    "electrium": "*",
+    "electrium": "0.0.4",
     "fluentnode": "^0.6.1",
     "mocha": "^2.5.2"
   }

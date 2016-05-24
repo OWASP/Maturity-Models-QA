@@ -1,7 +1,7 @@
 module.exports = function ( ) {
     return {
         files: [
-            { pattern: 'src/**/*.coffee'},
+            { pattern: 'src/**/*.coffee'}
         ],
 
         tests: [

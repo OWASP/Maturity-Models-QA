@@ -4,7 +4,7 @@ Docker = require('dockerode')
 MemoryStream = require 'memorystream'
 fs     = require 'fs'
 
-describe 'dockerode tests', ()->
+describe.only 'dockerode tests', ()->
 
   it 'constructor', ()->
     using new Docker(), ->

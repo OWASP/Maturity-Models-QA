@@ -1,3 +1,3 @@
 class BG_Http_API
 
-module.exports
+module.exports = BG_Http_API

@@ -155,7 +155,7 @@ describe 'dockerode tests', ()->
             console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
             done()
 
-  describe.only 'test ubuntu bash executions', ->
+  describe 'test ubuntu bash executions', ->
     docker     = null
     container  = null
     output     = null
@@ -183,28 +183,29 @@ describe 'dockerode tests', ()->
         next()
 
     it 'run: aaaa'                 , (done)-> run_Command [ 'aaaa'                           ], done
-
     it 'run: ps'                   , (done)-> run_Command ['ps', '-ax'                              ], done
     it 'run: bash -c uname -a'     , (done)-> run_Command ['bash', '-c', 'uname -a'          ], done
     it 'run: bash -c bash'         , (done)-> run_Command ['bash', '-c', 'ps'                ], done
     it 'run: bash -c docker ps'    , (done)-> run_Command ['bash', '-c', 'docker', 'ps'      ], done
     it 'run: bash -c docker ps -a' , (done)-> run_Command ['bash', '-c', 'docker', 'ps' ,'-a'], done
 
-    return
-    it 'run and remove (check timings)', (done)->
-      docker = create_Docker()
+  it 'run and remove BSIMM Graph', (done)->
+    console.log  'ads'
+    docker = create_Docker()
+    repoTag = 'diniscruz/bsimm-graphs:latest'
 
+    memStream = new MemoryStream()
+    memStream.on 'data', (data)->
+      console.log 'repo onData:' + data.toString()
 
+    docker.run 'repoTag', null, memStream,  (err, data, container)->
+      console.log err
+      console.log data
 
-      docker.run 'ubuntu', ['bash', '-c', 'uname -a'], memStream,  (err, data, container)->
-
-        console.log output
-
-        data.StatusCode.assert_Is 0
-        container.stop (err)->
-          err.message.assert_Is 'HTTP code is 304 which indicates error: container already stopped - '
+      container.stop (err)->
+        err.message.assert_Is 'HTTP code is 304 which indicates error: container already stopped - '
+        container.remove (err)->
+          assert_Is_Null err
           container.remove (err)->
-            assert_Is_Null err
-            container.remove (err)->
-              console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
-              done()
+            console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
+            done()

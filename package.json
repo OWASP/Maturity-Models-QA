@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "electrium": "0.0.2",
-    "fluentnode": "^0.6.1"
+    "fluentnode": "^0.6.1",
+    "mocha": "^2.5.2"
   }
 }

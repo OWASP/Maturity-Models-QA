@@ -9,9 +9,16 @@ describe '_Test_APIs | Http_API', ->
       @.constructor.name.assert_Is 'Http_API'
       @.docker_API.constructor.name.assert_Is 'Docker_API'
 
- it 'GET', (done)->
-   using new Http_API(), ->
-    @.GET '/', (html)->
-      console.log html
-      html.assert_Is 'Found. Redirecting to d3-radar'
-      done()       
+  it 'GET', (done)->
+    using new Http_API(), ->
+      @.GET '/', (html)->
+        console.log html
+        html.assert_Is 'Found. Redirecting to d3-radar'
+        done()
+
+  it 'server_Url', (done)->
+    using new Http_API(), ->
+      console.log @.server_Url()
+      @.server_Url().GET (html)->
+        html.assert_Is 'Found. Redirecting to d3-radar'
+        done()

@@ -1,3 +1,5 @@
+require 'fluentnode'
+
 Docker_API = require './Docker-API'
 
 class Http_API
@@ -9,5 +11,8 @@ class Http_API
     full_Url = @.docker_API.server_Url() + path
     console.log full_Url
     full_Url.GET callback
+
+  server_Url: ()=>
+    @.docker_API.server_Url()
 
 module.exports = Http_API

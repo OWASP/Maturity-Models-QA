@@ -2,7 +2,7 @@ require 'fluentnode'
 
 Docker_API = require '../../src/_Test_APIs/Docker-API'
 
-describe '_Test_APIs | Http_API', ->
+describe '_Test_APIs | Docker_API', ->
 
   it 'constructor', ->
     using new Docker_API(), ->

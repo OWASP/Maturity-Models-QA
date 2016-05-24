@@ -1,7 +1,7 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
 
-describe '_Test_APIs | Http_API', ->
+describe '_Test_APIs | Browser_API', ->
 
   it 'constructor', ->
     using new Browser_API(), ->

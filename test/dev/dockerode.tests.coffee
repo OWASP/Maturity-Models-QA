@@ -129,7 +129,10 @@ describe.only 'dockerode tests', ()->
 
     onProgress = (event) ->
       if ['Already exists', 'Waiting', 'Extracting', 'Pull complete', 'Downloading', 'Download complete'].not_Contains event.status
-        console.log "#{event.status} - #{event.id}"
+        if event.id
+          console.log "#{event.status} - #{event.id}"
+        else
+          console.log #{event.status}
 
     docker.pull repoTag, (err, stream) ->
       docker.modem.followProgress(stream, onFinished, onProgress)

@@ -74,3 +74,48 @@ describe.only 'dockerode tests', ()->
         assert_Is_Null err
         console.log  images.json_Str()
         done()
+
+  create_Docker = ()=>
+    docker_Files =  process.env.HOME.path_Combine('.docker/machine/machines/default')
+    if (docker_Files.folder_Not_Exists())
+      return new Docker()
+
+    ca_File      = docker_Files.path_Combine('ca.pem'  ).assert_File_Exists()
+    cert_File    = docker_Files.path_Combine('cert.pem').assert_File_Exists()
+    key_File     = docker_Files.path_Combine('key.pem' ).assert_File_Exists()
+
+    options =
+      host    : '192.168.99.100'
+      port    : 2376
+      ca      : ca_File  .file_Contents()
+      cert    : cert_File.file_Contents()
+      key     : key_File  .file_Contents()
+
+    return new Docker(options)
+
+
+
+  it 'pull repo', (done)->
+    repoTag = 'ubuntu' #'ubuntu:14.04'
+
+    docker = create_Docker()
+
+
+    onFinished = (err, output) ->
+      console.log output
+      if (err)
+        return done(err);
+      console.log '---------- on finished'
+
+
+    onProgress = (event) ->
+      console.log '---------- onProgress finished'
+      console.log event
+
+    docker.pull repoTag, (err, stream) ->
+      if (err)
+        return done(err)
+
+      docker.modem.followProgress(stream, onFinished, onProgress)
+
+

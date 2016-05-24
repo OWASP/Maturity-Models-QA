@@ -17,11 +17,12 @@ before_script:
   - "echo docker host id is ${cid:0:12}"
   - "docker ps"
 
-  - "docker logs ${cid:0:12}"
-  - sleep 3
-  - "docker logs ${cid:0:12}"
+  - docker logs "$(docker ps -q)"
+  - echo ${cid:0:12}
+  - sleep 5
+  - docker logs ${cid:0:12}
 
   - "echo curl http://192.168.99.100:3000"
-  - "curl http://localhosst:3000"
+  - "curl http://localhost:3000"
   - "echo curl http://192.168.99.100:3000"
-  - "curl http://localhosst:3000"
+  - "curl http://localhost:3000"

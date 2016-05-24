@@ -6,7 +6,8 @@ class Docker_API
 
   server_Url: ()=>
     if @.using_Docker_Machine()
-      'http://192.168.99.100:3000'
+      #'http://192.168.99.100:3000'  # having some issues with local machine
+      'http://188.166.175.74'       # using digital ocean image
     else
       'http://127.0.0.1:3000'
 

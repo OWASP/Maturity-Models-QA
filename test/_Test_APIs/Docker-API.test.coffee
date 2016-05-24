@@ -13,7 +13,8 @@ describe '_Test_APIs | Docker_API', ->
   it 'server_Url', ->
     using new Docker_API(), ->
       @.using_Docker_Machine = -> true
-      @.server_Url().assert_Is 'http://192.168.99.100:3000'
+      @.server_Url().assert_Is 'http://188.166.175.74'  # using digital ocean image
+      #@.server_Url().assert_Is  'http://192.168.99.100:3000'
       @.using_Docker_Machine = -> false
       @.server_Url().assert_Is 'http://127.0.0.1:3000'
 

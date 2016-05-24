@@ -115,28 +115,6 @@ describe.only 'dockerode tests', ()->
 
         docker.modem.followProgress(stream, onFinished, onProgress)
 
-
-    it 'pull diniscruz/bsimm-graphs ', (done)->
-      @.timeout 60000
-      repoTag = 'diniscruz/bsimm-graphs:latest'
-      docker = create_Docker()
-
-      onFinished = (err, output) ->
-        assert_Is_Null err
-        console.log output.last()
-        output.last().status.assert_Contains repoTag
-        done()
-
-      onProgress = (event) ->
-        if ['Already exists', 'Waiting', 'Extracting', 'Pull complete', 'Downloading', 'Download complete'].not_Contains event.status
-          if event.id
-            console.log "#{event.status} - #{event.id}"
-          else
-            console.log #{event.status}
-
-      docker.pull repoTag, (err, stream) ->
-        docker.modem.followProgress(stream, onFinished, onProgress)
-
     it 'run ubunto commands ', (done)->
       docker = create_Docker()
 
@@ -193,61 +171,64 @@ describe.only 'dockerode tests', ()->
     it 'run: bash -c docker ps -a' , (done)-> run_Command ['bash', '-c', 'docker', 'ps' ,'-a'], done
 
 
-  it 'run and remove BSIMM Graph', (done)->
-    @.timeout 5000
-    docker = create_Docker()
-    repoTag = 'diniscruz/bsimm-graphs:latest'
-    port = 30000 + 5000.random() 
-    options =
-      Image       : repoTag
-      AttachStdin : false,
-      AttachStdout: true,
-      AttachStderr: true,
-      Tty         : true,
-      Cmd         : null
-      OpenStdin   : false,
-      StdinOnce   : false
-      ExposedPorts: {'3000/tcp': {} }
-      PortBindings: {'3000/tcp': [{ 'HostPort': port.str() }] },
+  describe 'bsimm-graphs tests', ->
 
-    docker.createContainer options, (err, container)->
+    it 'pull diniscruz/bsimm-graphs', (done)->
+      @.timeout 60000
+      repoTag = 'diniscruz/bsimm-graphs:latest'
+      docker = create_Docker()
 
-      if err
-        console.log err
-        return done(err)
+      onFinished = (err, output) ->
+        assert_Is_Null err
+        console.log output.last()
+        output.last().status.assert_Contains repoTag
+        done()
 
-      container.start (err, abc)->
-        console.log '>>>>   here'
-        2000.wait ->
-          url = "http://192.168.99.100:#{port}"
-          url.GET (data)=>
-            console.log '>>>>   got data'
-            console.log data
-            if data
-              data.assert_Is 'Found. Redirecting to d3-radar'
+      onProgress = (event) ->
+        if ['Already exists', 'Waiting', 'Extracting', 'Pull complete', 'Downloading', 'Download complete'].not_Contains event.status
+          if event.id
+            console.log "#{event.status} - #{event.id}"
+          else
+            console.log #{event.status}
 
-            container.stop (err)->
-              assert_Is_Null err
-              container.remove (err)->
+      docker.pull repoTag, (err, stream) ->
+        docker.modem.followProgress(stream, onFinished, onProgress)
+
+    it 'run and remove BSIMM Graph', (done)->
+      @.timeout 5000
+      docker = create_Docker()
+      repoTag = 'diniscruz/bsimm-graphs:latest'
+      port = 30000 + 5000.random()
+      options =
+        Image       : repoTag
+        AttachStdin : false,
+        AttachStdout: true,
+        AttachStderr: true,
+        Tty         : true,
+        Cmd         : null
+        OpenStdin   : false,
+        StdinOnce   : false
+        ExposedPorts: {'3000/tcp': {} }
+        PortBindings: {'3000/tcp': [{ 'HostPort': port.str() }] },
+
+      docker.createContainer options, (err, container)->
+
+        if err
+          console.log err
+          return done(err)
+
+        container.start (err, abc)->
+          console.log '>>>>   here'
+          2000.wait ->
+            url = "http://192.168.99.100:#{port}"
+            url.GET (data)=>
+              console.log '>>>>   got data'
+              console.log data
+              if data
+                data.assert_Is 'Found. Redirecting to d3-radar'
+
+              container.stop (err)->
                 assert_Is_Null err
-                done()
-
-    return
-
-
-    memStream = new MemoryStream()
-    memStream.on 'data', (data)->
-      console.log 'repo onData:' + data.toString()
-
-    docker.run repoTag, null, memStream,  (err, data, container)->
-      console.log err
-      done() if err
-      #console.log data
-
-      container.stop (err)->
-        err.message.assert_Is 'HTTP code is 304 which indicates error: container already stopped - '
-        container.remove (err)->
-          assert_Is_Null err
-          container.remove (err)->
-            console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
-            done()
+                container.remove (err)->
+                  assert_Is_Null err
+                  done()

@@ -5,18 +5,20 @@ fs     = require 'fs'
 
 describe.only 'dockerode tests', ()->
 
-  it 'constructor', (done)->
+  it 'constructor', ()->
     using new Docker(), ->
-      log @
-      #@.modem.socketPath.assert_Is '/var/run/docker.sock'
-      #@.modem.protocol  .assert_Is 'http'
+      if @.modem.socketPath is undefined
+        console.log @
+      else
+        @.modem.socketPath.assert_Is '/var/run/docker.sock'
+        @.modem.protocol  .assert_Is 'http'
 
-      @.listContainers (err, containers)->
-        console.log err
-        console.log containers
-        done()
-
-  it 'Issue 244 - Cannot authenticate when docker env variables are not set', (done)->
+      #@.listContainers (err, containers)->
+      #  #console.log err
+      #  #console.log containers
+      #  done()
+  
+  xit 'Issue 244 - Cannot authenticate when docker env variables are not set', (done)->
     docker = new Docker()
 
     docker.listImages (err, data)->
@@ -26,12 +28,14 @@ describe.only 'dockerode tests', ()->
                       errno: 'ENOENT',
                       syscall: 'connect',
                       address: '/var/run/docker.sock' }
-      console.log err
-      console.log data
+
       done()
 
   it 'Issue 244 - Authenticating using docker-machine', (done)->
     docker_Files =  process.env.HOME.path_Combine('.docker/machine/machines/default')
+    if (docker_Files.folder_Not_Exists())
+      console.log 'skiping since docker-machine does not exist';
+      return done()
     ca_File      = docker_Files.path_Combine('ca.pem'  ).assert_File_Exists()
     cert_File    = docker_Files.path_Combine('cert.pem').assert_File_Exists()
     key_File     = docker_Files.path_Combine('key.pem' ).assert_File_Exists()
@@ -49,9 +53,9 @@ describe.only 'dockerode tests', ()->
       images.assert_Size_Is_Bigger_Than 10
       done()
 
-
-    #ca: fs.readFileSync('ca.pem'),
-    #cert: fs.readFileSync('cert.pem'),
-    #key: fs.readFileSync('key.pem')
-
-    #.docker/machine/machines/default
+  it 'list images', (done)->
+    using new Docker(), ->
+      @.listImages (err, images)->
+        assert_Is_Null err
+        console.log  images
+        done()

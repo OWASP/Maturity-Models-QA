@@ -1,3 +1,7 @@
+sudo: required
+services:
+  - docker
+
 language: node_js
 
 node_js:
@@ -8,7 +12,3 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
 
-sudo: required
-
-services:
-  - docker

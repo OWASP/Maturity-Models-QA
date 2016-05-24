@@ -1,3 +1,4 @@
+return
 require 'fluentnode'
 
 Spectron_API = require('electrium').Spectron_API

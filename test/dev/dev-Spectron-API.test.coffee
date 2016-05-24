@@ -1,5 +1,7 @@
 Spectron_API = require '../../src/Spectron-API'
 
+return
+
 wait = ()->
   new Promise (resolve)=>
     1000.wait ->

@@ -30,7 +30,7 @@ class Spectron_API
   start: =>
     @.app.start()
 
-  stop: =>
+  stop: => 
     @.app.stop()
 
   client: => @.app?.client

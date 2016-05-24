@@ -68,7 +68,7 @@ describe.only 'dockerode tests', ()->
     #export DOCKER_CERT_PATH="/Users/diniscruz/.docker/machine/machines/default"
     #export DOCKER_MACHINE_NAME="default"
 
-  it 'list images', (done)->
+  xit 'list images', (done)->
     using new Docker(), ->
       @.listImages (err, images)->
         assert_Is_Null err
@@ -96,21 +96,18 @@ describe.only 'dockerode tests', ()->
 
   @.timeout 20000
   it 'pull repo', (done)->
-    repoTag = 'ubuntu' #'ubuntu:14.04'
+    repoTag = 'ubuntu:latest' #'ubuntu:14.04'
 
     docker = create_Docker()
 
-
     onFinished = (err, output) ->
-      console.log output
-      if (err)
-        return done(err);
-      console.log '---------- on finished'
-
+      assert_Is_Null err
+      console.log output.last()
+      output.last().assert_Is { status: 'Status: Image is up to date for ubuntu:latest' }
+      done()
 
     onProgress = (event) ->
-      console.log '---------- onProgress finished'
-      console.log event
+      #console.log event
 
     docker.pull repoTag, (err, stream) ->
       if (err)
@@ -119,3 +116,4 @@ describe.only 'dockerode tests', ()->
       docker.modem.followProgress(stream, onFinished, onProgress)
 
 
+  

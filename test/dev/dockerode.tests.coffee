@@ -17,7 +17,7 @@ describe.only 'dockerode tests', ()->
       #  #console.log err
       #  #console.log containers
       #  done()
-  
+
   xit 'Issue 244 - Cannot authenticate when docker env variables are not set', (done)->
     docker = new Docker()
 
@@ -53,9 +53,19 @@ describe.only 'dockerode tests', ()->
       images.assert_Size_Is_Bigger_Than 10
       done()
 
+  it 'check environment variables', ->
+    console.log 'DOCKER_TLS_VERIFY ' + process.env.DOCKER_TLS_VERIFY
+    console.log 'DOCKER_HOST ' + process.env.DOCKER_HOST
+    console.log 'DOCKER_CERT_PATH ' + process.env.DOCKER_CERT_PATH
+    console.log 'DOCKER_TLS_VERIFY ' + process.env.DOCKER_TLS_VERIFY
+    #export DOCKER_TLS_VERIFY="1"
+    #export DOCKER_HOST="tcp://192.168.99.100:2376"
+    #export DOCKER_CERT_PATH="/Users/diniscruz/.docker/machine/machines/default"
+    #export DOCKER_MACHINE_NAME="default"
+
   it 'list images', (done)->
     using new Docker(), ->
       @.listImages (err, images)->
         assert_Is_Null err
-        console.log  images
+        console.log  images.json_Str()
         done()

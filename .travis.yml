@@ -13,7 +13,7 @@ before_script:
 #  - sleep 3
 
   - "docker pull diniscruz/bsimm-graphs"
-  - "cid=$(docker run -d -p 3000:3000 diniscruz/bsimm-graphs)"
+  - "cid=$(docker run -d -p 127.0.0.1:3000:3000 diniscruz/bsimm-graphs)"
   - "echo docker host id is ${cid:0:12}"
   - "docker ps"
 

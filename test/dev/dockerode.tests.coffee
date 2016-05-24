@@ -159,36 +159,32 @@ describe 'dockerode tests', ()->
     docker     = null
     container  = null
     output     = null
-    memStream = null
+    memStream  = null
 
 
     beforeEach ->
       docker    = create_Docker()
       memStream = new MemoryStream();
       output = '';
-      memStream.on 'data', (data)->
-        console.log '1'
-        console.log 'on data: ' + data.toString()
-        output += data.toString()
-        console.log output
 
     afterEach (done)->
-      console.log '2'
       return done() if not container
       container.remove (err)->
-        console.log '3'
         assert_Is_Null err
         done()
 
 
     run_Command = (args, next)->
-      console.log 'output: ' + output
+      memStream.on 'data', (data)->
+        output += data.toString()
       docker.run 'ubuntu', args, memStream,  (err, data, _container)->
+        console.log 'output: ' + output
         container = _container
         next()
 
     it 'run: aaaa'                 , (done)-> run_Command [ 'aaaa'                           ], done
-    it 'run: ps'                   , (done)-> run_Command ['ps'                              ], done
+
+    it 'run: ps'                   , (done)-> run_Command ['ps', '-ax'                              ], done
     it 'run: bash -c uname -a'     , (done)-> run_Command ['bash', '-c', 'uname -a'          ], done
     it 'run: bash -c bash'         , (done)-> run_Command ['bash', '-c', 'ps'                ], done
     it 'run: bash -c docker ps'    , (done)-> run_Command ['bash', '-c', 'docker', 'ps'      ], done

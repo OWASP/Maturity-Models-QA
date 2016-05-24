@@ -4,7 +4,7 @@ Docker = require('dockerode')
 MemoryStream = require 'memorystream'
 fs     = require 'fs'
 
-describe.only 'dockerode tests', ()->
+describe 'dockerode tests', ()->
 
   it 'constructor', ()->
     using new Docker(), ->
@@ -91,8 +91,8 @@ describe.only 'dockerode tests', ()->
     return new Docker(options)
 
 
-  @.timeout 60000
   it 'pull repo', (done)->
+    @.timeout 60000
     repoTag = 'ubuntu:latest' #'ubuntu:14.04'
 
     docker = create_Docker()
@@ -114,6 +114,7 @@ describe.only 'dockerode tests', ()->
 
 
   it 'pull diniscruz/bsimm-graphs ', (done)->
+    @.timeout 60000
     repoTag = 'diniscruz/bsimm-graphs:latest'
     docker = create_Docker()
 
@@ -153,3 +154,52 @@ describe.only 'dockerode tests', ()->
           container.remove (err)->
             console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
             done()
+
+  describe.only 'test ubuntu bash executions', ->
+    docker     = null
+    container  = null
+    output     = null
+    memStream = null
+
+
+    beforeEach ->
+      docker    = create_Docker()
+      memStream = new MemoryStream();
+      output = '';
+      memStream.on 'data', (data)->
+        output += data.toString()
+
+    afterEach (done)->
+      container.remove (err)->
+        assert_Is_Null err
+        done()
+
+
+    run_Command = (args, next)->
+      docker.run 'ubuntu', args, memStream,  (err, data, _container)->
+        container = _container
+        next()
+
+    it 'run nothing'          , (done)-> run_Command [     'asd'              ], done
+    it 'run: ps'              , (done)-> run_Command ['ps'                    ], done
+    it 'run: bash -c uname -a', (done)-> run_Command ['bash', '-c', 'uname -a'], done
+    it 'run: bash -c bash'    , (done)-> run_Command ['bash', '-c', 'ps'      ], done
+
+    return
+    it 'run and remove (check timings)', (done)->
+      docker = create_Docker()
+
+
+
+      docker.run 'ubuntu', ['bash', '-c', 'uname -a'], memStream,  (err, data, container)->
+
+        console.log output
+
+        data.StatusCode.assert_Is 0
+        container.stop (err)->
+          err.message.assert_Is 'HTTP code is 304 which indicates error: container already stopped - '
+          container.remove (err)->
+            assert_Is_Null err
+            container.remove (err)->
+              console.log  err.message.contains 'HTTP code is 404 which indicates error: no such container - No such container'
+              done()

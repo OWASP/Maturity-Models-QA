@@ -58,6 +58,11 @@ describe.only 'dockerode tests', ()->
     console.log 'DOCKER_HOST ' + process.env.DOCKER_HOST
     console.log 'DOCKER_CERT_PATH ' + process.env.DOCKER_CERT_PATH
     console.log 'DOCKER_TLS_VERIFY ' + process.env.DOCKER_TLS_VERIFY
+
+    using new Docker(), ->
+      console.log '---------'
+      console.log @
+      console.log '---------'
     #export DOCKER_TLS_VERIFY="1"
     #export DOCKER_HOST="tcp://192.168.99.100:2376"
     #export DOCKER_CERT_PATH="/Users/diniscruz/.docker/machine/machines/default"

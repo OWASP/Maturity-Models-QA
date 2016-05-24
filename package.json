@@ -9,6 +9,7 @@
   "author": "Dinis Cruz",
   "license": "ISC",
   "dependencies": {
+    "dockerode": "^2.2.10",
     "electron-chromedriver": "^1.1.0",
     "electron-prebuilt": "^1.1.1",
     "fluentnode": "^0.6.1",

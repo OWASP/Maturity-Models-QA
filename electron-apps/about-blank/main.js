@@ -7,10 +7,11 @@ app.on('ready', function () {
     mainWindow = new BrowserWindow({
         show      : false,
         //center    : true,
-        x         : 100,
+        //x         : 100,
+        x         : 1200,
         y         : -1000,
-        width     : 800,
-        height    : 500
+        width     : 500,
+        height    : 400
     })
     mainWindow.loadURL('about:about')
 

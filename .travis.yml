@@ -22,7 +22,7 @@ before_script:
   - sleep 5
   - docker logs ${cid:0:12}
 
-  - "echo curl http://192.168.99.100:3000"
   - "curl http://localhost:3000"
+  - sleep 5
   - "echo curl http://192.168.99.100:3000"
-  - "curl http://localhost:3000"
+  - "curl http://127.0.0.1:3000"

@@ -1,12 +1,11 @@
 module.exports = function ( ) {
     return {
         files: [
-            { pattern: 'electron-apps/**/*.*', instrument: false},
             { pattern: 'src/**/*.coffee'},
         ],
 
         tests: [
-            'test/dev/**/*.coffee'
+            'test/**/*.coffee'
         ],
 
         testFramework: 'mocha',

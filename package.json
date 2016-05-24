@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^0.20.0",
-    "electrium": "0.0.4",
     "fluentnode": "^0.6.1",
     "mocha": "^2.5.2"
   }

@@ -94,7 +94,7 @@ describe.only 'dockerode tests', ()->
     return new Docker(options)
 
 
-
+  @.timeout 20000
   it 'pull repo', (done)->
     repoTag = 'ubuntu' #'ubuntu:14.04'
 

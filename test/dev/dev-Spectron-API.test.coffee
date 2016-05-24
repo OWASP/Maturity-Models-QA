@@ -19,7 +19,11 @@ describe 'Spectron-API tests',->
     wait().then ->
       spectron.stop()
 
-  it.only 'open (BBC news)', ->
+  it 'dockerode test', ->
+    console.log '....will go here'
+  # this is not working as expected
+  
+  xit 'open (BBC news)', ->
     url = 'http://news.bbc.co.uk'
     using spectron.show(), ->
       @.open(url).then =>

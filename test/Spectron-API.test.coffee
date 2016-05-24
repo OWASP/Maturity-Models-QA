@@ -5,7 +5,7 @@ describe 'Spectron-API',->
   spectron = null;
 
   @.timeout 4000
-  
+
   before ->
     spectron = new Spectron_API().setup()
     spectron.start()
@@ -27,7 +27,7 @@ describe 'Spectron-API',->
     using spectron, ->
       @.is_Running().assert_Is_True()
 
-  it.only 'open (BBC news)', ->
+  it 'open (BBC news)', ->
     url = 'http://news.bbc.co.uk'
     using spectron.show(), ->
       @.open url

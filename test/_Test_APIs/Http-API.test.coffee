@@ -9,10 +9,11 @@ describe '_Test_APIs | Http_API', ->
       @.constructor.name.assert_Is 'Http_API'
       @.docker_API.constructor.name.assert_Is 'Docker_API'
 
-  it 'GET', (done)->
+  it 'GET ....', (done)->
     using new Http_API(), ->
       @.GET '/', (html)->
         console.log html
+        assert_Is_Not_Null html
         html.assert_Is 'Found. Redirecting to d3-radar'
         done()
 

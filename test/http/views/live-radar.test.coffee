@@ -1,7 +1,7 @@
 Http_API = require '../../../src/_Test_APIs/Http-API'
 cheerio = require 'cheerio'
 
-describe 'view - d3-radar', ->
+describe 'http | view | live-radar', ->
 
   server   = null
   html     = null

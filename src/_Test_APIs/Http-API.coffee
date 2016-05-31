@@ -12,6 +12,10 @@ class Http_API
     console.log full_Url
     full_Url.GET callback
 
+  GET_Json: (path, callback)=>
+    full_Url = @.docker_API.server_Url() + path
+    full_Url.json_GET callback
+
   server_Url: ()=>
     @.docker_API.server_Url()
 

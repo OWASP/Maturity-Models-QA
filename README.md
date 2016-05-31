@@ -11,3 +11,7 @@ This is just a helper for the cases where I'm coding offline
   security tests should pick it up.
 - Add ZAP fuzzing tests to this endpoint, run ZAP in a docker container and instrument it from an Test (which can be triggered by a git pull into
   DinisCruz-Dev)
+- Add test for /view/route/list
+- Add test that requests all routes from '/view/route/list'
+
+- Add a Promise return value to $GET so that we don't need done()

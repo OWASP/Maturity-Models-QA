@@ -1,5 +1,4 @@
 Http_API  = require '../../src/_Test_APIs/Http-API'
-cheerio = require 'cheerio'
 
 describe '_qa-tests | logs', ->
   http_API = null

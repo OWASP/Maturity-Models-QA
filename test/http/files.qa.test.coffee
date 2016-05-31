@@ -1,11 +1,12 @@
 
-cheerio = require 'cheerio'
+
 Http_API  = require '../../src/_Test_APIs/Http-API'
 
 describe 'http | files', ->
+  
   http_API = null
 
-  beforeEach ()->
+  before ()->
     http_API = new Http_API()    
 
 
@@ -39,15 +40,13 @@ describe 'http | files', ->
     using http_API, ->
       @.GET '/api/v1/file/get/json-data', (data_json)=>
         @.GET  '/api/v1/file/get/json-data?pretty', (data_pretty)->
-          data_json.str().assert_Is_Not data_pretty
+          data_json.str()       .assert_Is_Not data_pretty
           data_json.json_Parse().assert_Is data_pretty.json_Parse()
           done()
 
   it '/views/files/list', (done)->
-    http_API.GET '/view/file/list', (data)->
-      using data , ->
-        $ = cheerio.load data
-        $('h2').html().assert_Is 'Available data files' 
-        $('a')[2].attribs.assert_Is { href : '/api/v1/file/get/json-data?pretty'}
-        $.html($('a')[2]).assert_Is '<a href="/api/v1/file/get/json-data?pretty">json-data</a>'
+    http_API.$GET '/view/file/list', ($)->
+      $('h2').html()   .assert_Is 'Available data files'
+      $('a')[2].attribs.assert_Is { href : '/api/v1/file/get/json-data?pretty'}
+      $.html($('a')[2]).assert_Is '<a href="/api/v1/file/get/json-data?pretty">json-data</a>'
       done()

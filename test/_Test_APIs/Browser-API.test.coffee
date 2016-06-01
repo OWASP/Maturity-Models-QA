@@ -1,7 +1,7 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
 
-describe.only '_Test_APIs | Browser_API', ->
+describe '_Test_APIs | Browser_API', ->
 
   browser_API = null
 
@@ -31,14 +31,14 @@ describe.only '_Test_APIs | Browser_API', ->
 
   it 'open', (done)->
     @.timeout 4500
-
+ 
     Spectron_API = require('electrium').Spectron_API
 
     spectron = new Spectron_API();
     spectron.setup()
-    spectron.options.path =spectron.options.path.remove('electrium/node_modules/')
+    spectron.options.path = spectron.options.path.remove('electrium/node_modules/').str()
     spectron.app = new spectron.Application(spectron.options)
-
+    #console.log  spectron.options
     ok = ()->
       console.log 'ok,closed ';
       done()

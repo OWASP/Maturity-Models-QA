@@ -60,17 +60,14 @@ describe '_Test_APIs | Browser_API ...', ->
           url.assert_Is browser_API.url_Target_Site + '/view/routes/list'
           done()
 
-  it 'url() with Promise', (done)->
+  it 'url() ', (done)->
     browser_API.open().then =>
-      browser_API.url().then (url)->
+      browser_API.url().then (url)->              # Promise
         url.assert_Contains '/d3-radar'
-        done()
+        browser_API.url (url)->                   # callback
+          url.assert_Contains '/d3-radar'
+          done()
 
-  it 'url() with Callback', (done)->
-    browser_API.open('/routes').then =>
-      browser_API.url (url)->
-        url.assert_Contains '/view/routes/list'
-        done()
 
 
 #  it 'open (with dev tools)', (done)->

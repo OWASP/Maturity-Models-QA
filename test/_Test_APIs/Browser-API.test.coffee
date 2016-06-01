@@ -1,7 +1,49 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
 
-describe.only '_Test_APIs | Browser_API', ->
+describe.only '_Test_APIs | Browser_API | open google', ->
+
+  browser_API = null
+  target_Url  = 'https://www.google.co.uk/'
+
+  beforeEach (done)->
+    browser_API = new Browser_API()
+    using browser_API.spectron, ->
+      @.start().then =>
+        @.show()
+        @.window().loadURL(target_Url).then ->
+        #@.open(target_Url).then ->
+          done()
+
+  afterEach ()->
+    using browser_API, ->
+      @.spectron?.stop()
+
+
+  it 'browserWindow.getURL', (done)->
+    using browser_API.spectron, ->
+      @.app.browserWindow.getURL().then (url)->
+        console.log 'The url is: ' + url
+        url.assert_Is target_Url
+        done()
+
+  it 'browserWindow.getTitle', (done)->
+    using browser_API.spectron, ->
+      @.app.browserWindow.getTitle().then (title)->
+        console.log 'The title is: ' + title
+        title.assert_Is 'Google'
+        done()
+
+  return
+  it 'open google, check Title', ()->
+    browser_API.spectron.open('https://www.google.com').then =>
+      browser_API.spectron.show()
+      browser_API.spectron.app.browserWindow.getTitle().then (title)->
+        console.log 'THE Title is: ' + title
+        title.assert_Is 'Google'
+
+
+describe '_Test_APIs | Browser_API', ->
 
   browser_API = null
 
@@ -17,17 +59,26 @@ describe.only '_Test_APIs | Browser_API', ->
       @.spectron?.stop()
 
   it 'constructor', (done)->
-    using new Browser_API(), ->
+    using browser_API, ->
       @.constructor.name.assert_Is 'Browser_API'
-      #@.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
+      @.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
       done()
 
-  it 'open google, check url', ()->
+  it 'open google, check url', (done)->
+    using browser_API.spectron, ->
+      @.open('https://www.google.com').then =>
+        @.show()
+        @.app.browserWindow.getURL().then (url)->
+          console.log 'THE ULR is: ' + url
+          url.assert_Contains('www.google.co.uk')
+          done()
+
+  it 'open google, check Title', ()->
     browser_API.spectron.open('https://www.google.com').then =>
       browser_API.spectron.show()
-      browser_API.spectron.app.browserWindow.getURL().then (url)->
-        console.log 'THE ULR is: ' + url
-        url.assert_Contains('www.google.co.uk')
+      browser_API.spectron.app.browserWindow.getTitle().then (title)->
+        console.log 'THE Title is: ' + title
+        title.assert_Is 'Google'
   return
 
   it 'open google', (done)->

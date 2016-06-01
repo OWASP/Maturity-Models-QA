@@ -1,6 +1,6 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
-describe.only '_Test_APIs | Browser_API ...', ->
+describe '_Test_APIs | Browser_API ...', ->
 
   browser_API = null
 

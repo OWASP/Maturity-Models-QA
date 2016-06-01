@@ -9,8 +9,8 @@ describe '_Test_APIs | Browser_API ...', ->
   before ()->
     browser_API = new Browser_API()
     using browser_API.spectron, ->
-      @.start().then =>
-        @.show()
+      @.start()
+        #.then =>@.show()
 
   after ()->
     using browser_API, ->

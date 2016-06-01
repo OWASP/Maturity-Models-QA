@@ -1,12 +1,13 @@
 require 'fluentnode'
 cheerio = require 'cheerio'
 
+Docker_API   = require './Docker-API'
 Spectron_API = require('electrium').Spectron_API
 
 class Browser_API
 
   constructor: ->
-    @.url_Target_Site = "http://46.101.86.6"
+    @.url_Target_Site = new Docker_API().server_Url()
     @.spectron        = new Spectron_API().setup()
     @.spectron.options.path = @.spectron.options.path.remove('electrium/node_modules/').str()
 

@@ -22,8 +22,20 @@ describe '_Test_APIs | Browser_API ...', ->
       @.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
       done()
 
+  it 'html() with Promise', (done)->
+    browser_API.open().then =>
+      browser_API.html().then (html)->
+        html.assert_Contains '<title></title>'
+        done()
+
+  it 'html() with Callback', (done)->
+    browser_API.open().then =>
+      browser_API.html (html)->
+        html.assert_Contains '<title></title>'
+        done()
+
   it 'open()', (done)->
-    @.timeout 10000
+    #@.timeout 10000
     browser_API.open().then =>
       using browser_API.spectron.app.browserWindow, ->
         @.getURL().then (url)->
@@ -31,7 +43,7 @@ describe '_Test_APIs | Browser_API ...', ->
           done()
 
   it "open('/routes')", (done)->
-    @.timeout 10000
+    #@.timeout 10000
     browser_API.open('/routes').then =>
       using browser_API.spectron.app.browserWindow, ->
         @.getURL().then (url)->
@@ -39,9 +51,17 @@ describe '_Test_APIs | Browser_API ...', ->
           url.assert_Is browser_API.url_Target_Site + '/view/routes/list'
           done()
 
-              #return 2000.wait ->
-              #  done()
+  it 'url() with Promise', (done)->
+    browser_API.open().then =>
+      browser_API.url().then (url)->
+        url.assert_Contains '/d3-radar'
+        done()
 
+  it 'url() with Callback', (done)->
+    browser_API.open('/routes').then =>
+      browser_API.url (url)->
+        url.assert_Contains '/view/routes/list'
+        done()
 
 
 #  it 'open (with dev tools)', (done)->

@@ -1,6 +1,6 @@
-sudo: required
-services:
-  - docker
+#sudo: required
+#services:
+#  - docker
 
 language: node_js
 
@@ -12,17 +12,17 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 #  - sleep 3
 
-  - "docker pull diniscruz/bsimm-graphs"
-  - "cid=$(docker run -d -p 127.0.0.1:3000:3000 diniscruz/bsimm-graphs)"
-  - "echo docker host id is ${cid:0:12}"
-  - "docker ps"
+#  - "docker pull diniscruz/bsimm-graphs"
+#  - "cid=$(docker run -d -p 127.0.0.1:3000:3000 diniscruz/bsimm-graphs)"
+#  - "echo docker host id is ${cid:0:12}"
+#  - "docker ps"
 
-  - docker logs "$(docker ps -q)"
-  - echo ${cid:0:12}
-  - sleep 5
-  - docker logs ${cid:0:12}
+#  - docker logs "$(docker ps -q)"
+#  - echo ${cid:0:12}
+#  - sleep 5
+#  - docker logs ${cid:0:12}
 
-  - "curl http://localhost:3000"
-  - sleep 5
-  - "echo curl http://192.168.99.100:3000"
-  - "curl http://127.0.0.1:3000"
+#  - "curl http://localhost:3000"
+#  - sleep 5
+#  - "echo curl http://192.168.99.100:3000"
+#  - "curl http://127.0.0.1:3000"

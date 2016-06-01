@@ -23,7 +23,7 @@ class Browser_API
 
   open: (path)=>
     url = @.url_Target_Site + (path || '/')
-    console.log 'opening ' + url
+    #console.log 'opening ' + url
     @.spectron.window().loadURL(url)
 
   url: (callback)=>

@@ -1,7 +1,7 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
 
-describe '_Test_APIs | Browser_API', ->
+describe.only '_Test_APIs | Browser_API', ->
 
   browser_API = null
 
@@ -10,34 +10,32 @@ describe '_Test_APIs | Browser_API', ->
   beforeEach (done)->
     browser_API = new Browser_API()
     using browser_API, ->
-      #@.spectron.start().then ->
+      @.spectron.start().then ->
         done()
 
   afterEach (done)->
     using browser_API, ->
-      #@.spectron.stop().then ->
+      @.spectron.stop().then ->
         done()
 
   it 'constructor', (done)->
     using new Browser_API(), ->
       @.constructor.name.assert_Is 'Browser_API'
-      #@.spectron.assert_Is_Object()
-      #console.log '-------------------'
-      #console.log @.spectron.root_Path
-      #console.log @.spectron.options
-      #console.log '-------------------'
+      @.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
       done()
 
 
-  it 'open', (done)->
-    @.timeout 4500
+  it 'open', ()->
+    #console.log browser_API.s.show()
+    return
+    #@.timeout 4500
  
-    Spectron_API = require('electrium').Spectron_API
+    #Spectron_API = require('electrium').Spectron_API
 
-    spectron = new Spectron_API();
-    spectron.setup()
-    spectron.options.path = spectron.options.path.remove('electrium/node_modules/').str()
-    spectron.app = new spectron.Application(spectron.options)
+    #spectron = new Spectron_API();
+    #spectron.setup()
+    #spectron.options.path = spectron.options.path.remove('electrium/node_modules/').str()
+    #spectron.app = new spectron.Application(spectron.options)
     #console.log  spectron.options
     ok = ()->
       console.log 'ok,closed ';
@@ -45,7 +43,15 @@ describe '_Test_APIs | Browser_API', ->
     fail = (err)->
       console.log('fail')
       done()
-    #return spectron.start().then ok, fail
+    aaa = spectron.app.start()
+    aaa.then ->  console.log 'then'
+    aaa.catch (err)->  console.log err
+    console.log aaa
+    1000.wait ->
+      console.log aaa
+    return aaa
+
+
     spectron.start().then ()->
       console.log 'showing window'
       spectron.window().showInactive().then ->

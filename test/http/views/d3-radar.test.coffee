@@ -2,7 +2,7 @@ async     = require 'async'
 cheerio   = require 'cheerio'
 Http_API  = require '../../../src/_Test_APIs/Http-API'
 
-describe.only 'http | views | d3-radar', ->
+describe 'http | views | d3-radar', ->
 
   server   = null
   html     = null
@@ -12,7 +12,6 @@ describe.only 'http | views | d3-radar', ->
   before (done)->
     server = new Http_API().server_Url()    
     server.add(page).GET (html)->
-      console.log  html
       $ = cheerio.load(html)
       done()
 
@@ -26,16 +25,13 @@ describe.only 'http | views | d3-radar', ->
     @.timeout 4000
     check_Script =  (target, next)->
       target = server.add(target.attribs.src)
-      console.log 'check_Script: ' +  target
       target.GET (html)->
         html.assert_Not_Contains 'Cannot GET'
         next()
 
     check_Style =  (style, next)->
       target = server.add(style.attribs.href)
-      console.log 'check_Style: ' + target
       target.GET (html)->
-        console.log ' ..... got code for: ' + target + ' ... ' + html.size()
         html.assert_Not_Contains 'Cannot GET'
         next()
 

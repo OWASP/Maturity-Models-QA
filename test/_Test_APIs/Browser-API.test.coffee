@@ -9,16 +9,21 @@ describe.only '_Test_APIs | Browser_API | open google', ->
   beforeEach (done)->
     browser_API = new Browser_API()
     using browser_API.spectron, ->
-      @.start().then =>
-        @.show()
-        @.window().loadURL(target_Url).then ->
-        #@.open(target_Url).then ->
-          done()
+      @.start()
+        .then =>
+          @.show()
+          console.log "opening #{target_Url}"
+          @.window().loadURL(target_Url).then ->     #@.open(target_Url).then ->
+            done()
+        .catch (err)->
+          console.log 'Error in Before: ' + err
 
   afterEach ()->
     using browser_API, ->
       @.spectron?.stop()
 
+  it 'no action', ()->
+    console.log 'should open and close window ok'
 
   it 'browserWindow.getURL', (done)->
     using browser_API.spectron, ->
@@ -32,6 +37,12 @@ describe.only '_Test_APIs | Browser_API | open google', ->
       @.app.browserWindow.getTitle().then (title)->
         console.log 'The title is: ' + title
         title.assert_Is 'Google'
+        done()
+
+  it 'client.getHTML', (done)->
+    using browser_API.spectron, ->
+      @.app.client.getHTML('*').then (html)->
+        html.assert_Contains('<title>Google</title>')
         done()
 
   return

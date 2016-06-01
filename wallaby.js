@@ -5,7 +5,8 @@ module.exports = function ( ) {
         ],
 
         tests: [
-            'test/**/*.coffee'
+            //'test/**/*.coffee'
+            'test/_Test_APIs/Browser-API.test.coffee'
         ],
 
         testFramework: 'mocha',

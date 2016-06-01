@@ -7,25 +7,67 @@ describe.only '_Test_APIs | Browser_API', ->
 
   #@.timeout 4000
 
-  beforeEach (done)->
+  beforeEach ()->
     browser_API = new Browser_API()
     using browser_API, ->
-      @.spectron.start().then ->
-        done()
+      @.spectron.start()
 
-  afterEach (done)->
+  afterEach ()->
     using browser_API, ->
-      @.spectron.stop().then ->
-        done()
+      @.spectron?.stop()
 
   it 'constructor', (done)->
     using new Browser_API(), ->
       @.constructor.name.assert_Is 'Browser_API'
-      @.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
+      #@.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
       done()
 
+  it 'open google, check url', ()->
+    browser_API.spectron.open('https://www.google.com').then =>
+      browser_API.spectron.show()
+      browser_API.spectron.app.browserWindow.getURL().then (url)->
+        console.log 'THE ULR is: ' + url
+        url.assert_Contains('www.google.co.uk')
+  return
 
-  it 'open', ()->
+  it 'open google', (done)->
+    @.timeout 200500
+    browser_API.spectron.open('https://www.google.com')
+        .then =>
+            using browser_API.spectron,->
+              @.show()
+
+              #console.log @.app
+              #console.log @.app.electron
+
+              console.log @.app.browserWindow
+              #@.electron.openDevTools()
+              #console.log @.client()
+
+              return @.app.browserWindow.getURL().then (url)->
+                console.log url
+                url.assert_Contains('www.google.com')
+                done()
+
+              return 2000.wait ->
+                done()
+
+              @.app.browserWindow.setPosition(10,-1000)
+              @.app.browserWindow.setSize(1000,1000)
+              @.app.browserWindow.openDevTools()
+              #browser_API.spectron.client()
+              #console.log  @.window().getHTML().then (html)->
+                #console.log html
+              #200000.wait ->
+              #  done()
+        .catch (err)->
+          console.log err
+          done()
+  return
+  it 'open', (done)->
+    #browser_API.spectron.show()
+    browser_API.spectron.open('http://www.google.com')
+    1000.wait done
     #console.log browser_API.s.show()
     return
     #@.timeout 4500

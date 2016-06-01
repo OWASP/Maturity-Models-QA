@@ -1,84 +1,18 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
-
-describe.only '_Test_APIs | Browser_API | open google', ->
-
-  browser_API = null
-  target_Url  = 'https://www.google.co.uk/'
-
-  #beforeEach (done)->
-  before (done)->
-    browser_API = new Browser_API()
-    using browser_API.spectron, ->
-      @.start()
-        .then =>
-          @.show()
-          console.log "opening #{target_Url}"
-          @.window().loadURL(target_Url).then ->     #@.open(target_Url).then ->
-            done()
-        .catch (err)->
-          console.log 'Error in Before: ' + err
-
-  #afterEach ()->
-  after ()->
-    using browser_API, ->
-      @.spectron?.stop()
-
-  it 'no action', ()->
-    console.log 'should open and close window ok'
-
-  it 'browserWindow.getURL', (done)->
-    using browser_API.spectron, ->
-      @.app.browserWindow.getURL().then (url)->
-        console.log 'The url is: ' + url
-        url.assert_Is target_Url
-        done()
-
-  it 'browserWindow.getTitle', (done)->
-    using browser_API.spectron, ->
-      @.app.browserWindow.getTitle().then (title)->
-        console.log 'The title is: ' + title
-        title.assert_Is 'Google'
-        done()
-
-  it 'client.getHTML', (done)->
-    using browser_API.spectron, ->
-      @.app.client.getHTML('*').then (html)->
-        html.assert_Contains('<title>Google</title>')
-        done()
-
-  it 'client.getUrl', (done)->
-    using browser_API.spectron, ->
-      @.app.client.getUrl().then (url)->
-        url.assert_Is target_Url
-        done()
-
-
-  #it '_client.keys', (done)->
-  #    using browser_API.spectron, ->
-  #      console.log @.app.client;
-  #      done()
-  return
-  it 'open google, check Title', ()->
-    browser_API.spectron.open('https://www.google.com').then =>
-      browser_API.spectron.show()
-      browser_API.spectron.app.browserWindow.getTitle().then (title)->
-        console.log 'THE Title is: ' + title
-        title.assert_Is 'Google'
-
-
-describe '_Test_APIs | Browser_API', ->
+describe.only '_Test_APIs | Browser_API ...', ->
 
   browser_API = null
 
   #@.timeout 4000
 
-  beforeEach ()->
+  before ()->
     browser_API = new Browser_API()
-    using browser_API, ->
-      @.spectron.start()
+    using browser_API.spectron, ->
+      @.start().then =>
+        @.show()
 
-  afterEach ()->
+  after ()->
     using browser_API, ->
       @.spectron?.stop()
 
@@ -88,127 +22,36 @@ describe '_Test_APIs | Browser_API', ->
       @.spectron.root_Path.assert_Contains 'BSIMM-Graphs-QA'
       done()
 
-  it 'open google, check url', (done)->
-    using browser_API.spectron, ->
-      @.open('https://www.google.com').then =>
-        @.show()
-        @.app.browserWindow.getURL().then (url)->
-          console.log 'THE ULR is: ' + url
-          url.assert_Contains('www.google.co.uk')
+  it 'open()', (done)->
+    @.timeout 10000
+    browser_API.open().then =>
+      using browser_API.spectron.app.browserWindow, ->
+        @.getURL().then (url)->
+          url.assert_Is browser_API.url_Target_Site + '/d3-radar'
           done()
 
-  it 'open google, check Title', ()->
-    browser_API.spectron.open('https://www.google.com').then =>
-      browser_API.spectron.show()
-      browser_API.spectron.app.browserWindow.getTitle().then (title)->
-        console.log 'THE Title is: ' + title
-        title.assert_Is 'Google'
-  return
+  it "open('/routes')", (done)->
+    @.timeout 10000
+    browser_API.open('/routes').then =>
+      using browser_API.spectron.app.browserWindow, ->
+        @.getURL().then (url)->
+          console.log url
+          url.assert_Is browser_API.url_Target_Site + '/view/routes/list'
+          done()
 
-  it 'open google', (done)->
-    @.timeout 200500
-    browser_API.spectron.open('https://www.google.com')
-        .then =>
-            using browser_API.spectron,->
-              @.show()
-
-              #console.log @.app
-              #console.log @.app.electron
-
-              console.log @.app.browserWindow
-              #@.electron.openDevTools()
-              #console.log @.client()
-
-              return @.app.browserWindow.getURL().then (url)->
-                console.log url
-                url.assert_Contains('www.google.com')
-                done()
-
-              return 2000.wait ->
-                done()
-
-              @.app.browserWindow.setPosition(10,-1000)
-              @.app.browserWindow.setSize(1000,1000)
-              @.app.browserWindow.openDevTools()
-              #browser_API.spectron.client()
-              #console.log  @.window().getHTML().then (html)->
-                #console.log html
-              #200000.wait ->
+              #return 2000.wait ->
               #  done()
-        .catch (err)->
-          console.log err
-          done()
-  return
-  it 'open', (done)->
-    #browser_API.spectron.show()
-    browser_API.spectron.open('http://www.google.com')
-    1000.wait done
-    #console.log browser_API.s.show()
-    return
-    #@.timeout 4500
- 
-    #Spectron_API = require('electrium').Spectron_API
-
-    #spectron = new Spectron_API();
-    #spectron.setup()
-    #spectron.options.path = spectron.options.path.remove('electrium/node_modules/').str()
-    #spectron.app = new spectron.Application(spectron.options)
-    #console.log  spectron.options
-    ok = ()->
-      console.log 'ok,closed ';
-      done()
-    fail = (err)->
-      console.log('fail')
-      done()
-    aaa = spectron.app.start()
-    aaa.then ->  console.log 'then'
-    aaa.catch (err)->  console.log err
-    console.log aaa
-    1000.wait ->
-      console.log aaa
-    return aaa
 
 
-    spectron.start().then ()->
-      console.log 'showing window'
-      spectron.window().showInactive().then ->
-        console.log 'loading url'
-        spectron.window().loadURL("https://www.google.com")
-        spectron.client().waitUntilWindowLoaded()
-        ##'http://localhost:3000')
-          .then ->
-            #console.log 'getting title'
-            #aaa = spectron.window().getUrl()
-              #.then ->
-                console.log 'stopping now'
-                1000.wait ->
-                  spectron.app.stop()
-                      .then ->
-                        console.log 'stopped'
-                        done()
-            #console.log  aaa
-            #aaa.then ok, fail
-      return
-      #done()
-      #spectron.show() ->
-      spectron.window().loadURL('http://localhost:3000')
 
-      #spectron.open('http://news.bbc.co.uk').then ()->
-      1000.wait ->
-        spectron
-          .app.stop()
-              .then ok, fail
-      console.log('aaaaa')
-    return
-
-    using new Browser_API(), ->
-      spectron = @.spectron
-      spectron.setup()
-      #console.log  @.spectron.options.path
-      spectron.start().then ->
-
-      #console.log @.spectron
-      #@.spectron.show ->
-      #@.open 'http://localhost:3000'
-      #  1000.wait ->
-      #done()
+#  it 'open (with dev tools)', (done)->
+#    @.timeout 10000
+#    browser_API.open('https://www.google.co.uk').then =>
+#      using browser_API.spectron.app.browserWindow, ->
+#        @.setPosition(10,-1000)
+#        @.setSize(1000,1000)
+#        @.openDevTools()  # not working as expected
+#        @.getURL().then (url)->
+#          url.assert_Contains('www.google')
+#          5500.wait ->
+#            done()

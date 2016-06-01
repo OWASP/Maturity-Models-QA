@@ -6,7 +6,8 @@ describe.only '_Test_APIs | Browser_API | open google', ->
   browser_API = null
   target_Url  = 'https://www.google.co.uk/'
 
-  beforeEach (done)->
+  #beforeEach (done)->
+  before (done)->
     browser_API = new Browser_API()
     using browser_API.spectron, ->
       @.start()
@@ -18,7 +19,8 @@ describe.only '_Test_APIs | Browser_API | open google', ->
         .catch (err)->
           console.log 'Error in Before: ' + err
 
-  afterEach ()->
+  #afterEach ()->
+  after ()->
     using browser_API, ->
       @.spectron?.stop()
 
@@ -45,6 +47,17 @@ describe.only '_Test_APIs | Browser_API | open google', ->
         html.assert_Contains('<title>Google</title>')
         done()
 
+  it 'client.getUrl', (done)->
+    using browser_API.spectron, ->
+      @.app.client.getUrl().then (url)->
+        url.assert_Is target_Url
+        done()
+
+
+  #it '_client.keys', (done)->
+  #    using browser_API.spectron, ->
+  #      console.log @.app.client;
+  #      done()
   return
   it 'open google, check Title', ()->
     browser_API.spectron.open('https://www.google.com').then =>

@@ -23,6 +23,7 @@ describe.only 'http | views | d3-radar', ->
     $('h3'    ).html().assert_Is 'BSIMM Radar Graphs (v0.7.4)'
 
   it 'check dependencies can be loaded', (done)->
+    @.timeout 4000
     check_Script =  (target, next)->
       target = server.add(target.attribs.src)
       console.log 'check_Script: ' +  target
@@ -34,6 +35,7 @@ describe.only 'http | views | d3-radar', ->
       target = server.add(style.attribs.href)
       console.log 'check_Style: ' + target
       target.GET (html)->
+        console.log ' ..... got code for: ' + target + ' ... ' + html.size()
         html.assert_Not_Contains 'Cannot GET'
         next()
 

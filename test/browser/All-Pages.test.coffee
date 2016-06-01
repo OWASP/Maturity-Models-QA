@@ -1,6 +1,6 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
-describe.only 'browser | All-Pages', ->
+describe 'browser | All-Pages', ->
 
   browser = null
 
@@ -16,11 +16,10 @@ describe.only 'browser | All-Pages', ->
 
   it 'get routes list', (done)->
     browser.open('/routes').then ->
-      browser.html (html)->
-        cheerio = require 'cheerio'
-        html.assert_Contains '<html><head>'
-        $ = cheerio.load(html)
+      browser.$html ($)->
+        $.html().assert_Contains '<h2>Available routes</h2>'
         $('a').length.assert_Is 37
+        $('h2').html().assert_Is('Available routes')
         done()
 
     #view/routes/list

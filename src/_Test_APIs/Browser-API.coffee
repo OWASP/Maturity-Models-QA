@@ -15,6 +15,12 @@ class Browser_API
       callback(html) if callback
       return html
 
+  $html: (callback)=>
+    @.spectron.app.client.getHTML('html').then (html)->
+      $ = cheerio.load html
+      callback($) if callback
+      return $
+
   open: (path)=>
     url = @.url_Target_Site + (path || '/')
     console.log 'opening ' + url

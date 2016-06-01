@@ -34,6 +34,15 @@ describe '_Test_APIs | Browser_API ...', ->
         html.assert_Contains '<title></title>'
         done()
 
+  it '$html()', (done)->
+    browser_API.open().then =>
+      browser_API.$html ($)->                           # test using callback
+        $.html().assert_Contains '<title></title>'
+        browser_API.$html().then (_$)->                 # test using promise
+          _$.html().assert_Contains '<title></title>'
+          $.html().assert_Is _$.html()
+          done()
+
   it 'open()', (done)->
     #@.timeout 10000
     browser_API.open().then =>

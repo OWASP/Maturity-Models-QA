@@ -13,5 +13,8 @@
     "electrium": "0.0.5",
     "fluentnode": "^0.6.1",
     "mocha": "^2.5.2"
+  },
+  "devDependencies": {
+    "async": "^1.5.2"
   }
 }

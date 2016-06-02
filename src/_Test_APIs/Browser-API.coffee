@@ -17,15 +17,24 @@ class Browser_API
       return html
 
   $html: (callback)=>
-    @.spectron.app.client.getHTML('html').then (html)->
-      $ = cheerio.load html
-      callback($) if callback
-      return $
+    @.spectron.app.client.getHTML('html')
+      .then (html)->
+        $ = cheerio.load html
+        callback($) if callback
+        return $
+      .catch (err)->                  # to this for now, need a better solution to handle errors that happen inside
+        console.log err               # .then() blocks
+
 
   open: (path)=>
     url = @.url_Target_Site + (path || '/')
     #console.log 'opening ' + url
     @.spectron.window().loadURL(url)
+      .catch (err)->
+        console.log err
+
+  show: ()=>
+    @.spectron.show()
 
   url: (callback)=>
     @.spectron.app.browserWindow.getURL().then (url)->    # seems to be more robust than @.spectron.app.client.getUrl()

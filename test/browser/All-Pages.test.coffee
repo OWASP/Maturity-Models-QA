@@ -2,7 +2,7 @@ Browser_API = require '../../src/_Test_APIs/Browser-API'
 Http_API    = require '../../src/_Test_APIs/Http-API'
 async       = require 'async'
 
-describe.only 'browser | All-Pages', ->
+describe 'browser | All-Pages', ->
 
   browser = null
   http    = null
@@ -27,6 +27,7 @@ describe.only 'browser | All-Pages', ->
         done()
 
   it 'open all pages (http)', (done)->                                         # using site hosted at DigitalOcean this test runs in 1.4sec
+    @.timeout 3000
     check_Link = (href, next)->                                                # using site hosted at localhost it runs in 680ms
       #console.log "Loading #{href}"
       http.GET href, (html)->

@@ -72,7 +72,7 @@ describe 'browser | All-Pages', ->
                 next()
 
     browser.open('/view/routes/list ').then ->                                # get all current routes from browser
-      browser.show()                                                         # don't show the browser (only good when debugging an issue)
+      #browser.show()                                                         # don't show the browser (only good when debugging an issue)
       browser.$html ($)->
         links = (link.attribs.href for link in $('a') )                       # extract all links from page
         async.eachSeries links, check_Link, done                              # for each link call check_Link

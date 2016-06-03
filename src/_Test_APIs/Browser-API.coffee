@@ -29,7 +29,7 @@ class Browser_API
   open: (path)=>
     url = @.url_Target_Site + (path || '/')
     #console.log 'opening ' + url
-    @.spectron.window().loadURL(url)
+    @.spectron.open url
       .catch (err)->
         console.log err
 
@@ -37,8 +37,11 @@ class Browser_API
     @.spectron.show()
 
   url: (callback)=>
-    @.spectron.app.browserWindow.getURL().then (url)->    # seems to be more robust than @.spectron.app.client.getUrl()
-      callback(url) if callback
-      return url
+    # @.spectron.app.browserWindow.getURL().then (url)->    # seems to be more robust than @.spectron.app.client.getUrl()
+    # @.spectron.app.client.getUrl().then (url)->           # also is not that stable 
+    @.html().then ()=>                                      # todo: find why calling the @.html first makes getUrl more robust 
+      @.spectron.app.client.getUrl().then (url)->
+        callback(url) if callback
+        return url
       
 module.exports = Browser_API

@@ -23,10 +23,17 @@ describe.only '_Test_APIs | Browser_API ...', ->
       done()
 
   it 'html() with Promise', (done)->
-    browser_API.open().then =>
+    #
+    browser_API.show()
+    browser_API.open('/routes').then =>
       browser_API.html().then (html)->
         html.assert_Contains '<title></title>'
-        done()
+        browser_API.spectron.app.browserWindow.getURL()
+          .then (url)->
+            console.log url
+
+            done()
+
 
   it 'html() with Callback', (done)->
     browser_API.open().then =>
@@ -43,30 +50,21 @@ describe.only '_Test_APIs | Browser_API ...', ->
           $.html().assert_Is _$.html()
           done()
 
-  it 'open()', (done)->
-    #@.timeout 10000
-    browser_API.open().then =>
-      using browser_API.spectron.app.browserWindow, ->
-        @.getURL().then (url)->
-          url.assert_Is browser_API.url_Target_Site + '/d3-radar'
-          done()
+  it 'open()', ()->
+    browser_API.open()
 
   it "open('/routes')", (done)->
-    #@.timeout 10000
     browser_API.open('/routes').then =>
-      using browser_API.spectron.app.browserWindow, ->
-        @.getURL().then (url)->
-          console.log url
-          url.assert_Is browser_API.url_Target_Site + '/view/routes/list'
-          done()
+      browser_API.url (url)->
+        url.assert_Is browser_API.url_Target_Site + '/view/routes/list'
+        done()
 
-  it 'url() ', (done)->
-    browser_API.open().then =>
+  it 'url()', ()->
+    browser_API.open().then  ->
       browser_API.url().then (url)->              # Promise
         url.assert_Contains '/d3-radar'
         browser_API.url (url)->                   # callback
           url.assert_Contains '/d3-radar'
-          done()
 
 
 

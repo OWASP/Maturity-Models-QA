@@ -4,7 +4,7 @@ describe.only '_Test_APIs | Browser_API ...', ->
 
   browser_API = null
 
-  #@.timeout 4000
+  @.timeout 4000
 
   before ()->
     browser_API = new Browser_API()

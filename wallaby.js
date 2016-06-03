@@ -6,7 +6,8 @@ module.exports = function ( ) {
 
         tests: [
             //'test/**/*.coffee'
-            'test/browser/All-Pages.test.coffee'
+            //'test/browser/All-Pages.test.coffee'
+            'test/**/*-A.coffee'
         ],
 
         testFramework: 'mocha',

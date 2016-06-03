@@ -22,7 +22,7 @@ describe 'browser | All-Pages', ->
     browser.open('/routes').then ->
       browser.$html ($)->
         $.html().assert_Contains '<h2>Available routes</h2>'
-        $('a').length.assert_Is 37
+        $('a').length.assert_Is_Bigger_Than 37
         $('h2').html().assert_Is('Available routes')
         done()
 
@@ -36,7 +36,7 @@ describe 'browser | All-Pages', ->
 
     http.$GET '/view/routes/list ', ($)->
       links = (link.attribs.href for link in $('a'))
-      links.assert_Size_Is 37
+      links.assert_Is_Bigger_Than 37
       async.eachSeries links, check_Link, done
 
 
@@ -72,7 +72,7 @@ describe 'browser | All-Pages', ->
                 next()
 
     browser.open('/view/routes/list ').then ->                                # get all current routes from browser
-      #browser.show()                                                         # don't show the browser (only good when debugging an issue)
+      browser.show()                                                         # don't show the browser (only good when debugging an issue)
       browser.$html ($)->
         links = (link.attribs.href for link in $('a') )                       # extract all links from page
         async.eachSeries links, check_Link, done                              # for each link call check_Link

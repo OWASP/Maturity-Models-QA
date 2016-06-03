@@ -11,10 +11,13 @@ describe '_qa-tests | logs', ->
       data.assert_Is 'Cannot GET /aaaaa\n'
       done()
 
-  it '/v1/api/logs/file/0', (done)->                        # get the fist log file
-    http_API.GET '/api/v1/logs/file/0', (logs_Data)->
-      logs_Data.assert_Contains 'GET /aaaa'
-      done()
+  it '/v1/api/logs/file/0', (done)->                   # get the fist last file
+    http_API.GET_Json '/api/v1/logs/list', (items)->
+      index =  items.size() - 1
+      url   = "/api/v1/logs/file/#{index}"
+      http_API.GET url, (logs_Data)->
+        logs_Data.assert_Contains 'GET /aaaa'
+        done()
 
   it '/v1/api/logs/file/aaabbb', (done)->                   # make a request to a log file that doesn't exist
     http_API.GET '/api/v1/logs/file/aaabbb', (logs_Data)->

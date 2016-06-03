@@ -1,5 +1,3 @@
-
-
 Http_API  = require '../../src/_Test_APIs/Http-API'
 
 describe 'http | files', ->
@@ -12,7 +10,7 @@ describe 'http | files', ->
 
   it '/api/v1/files/list', (done)->
     http_API.GET_Json '/api/v1/file/list', (data)->
-      data.assert_Contains [ 'coffee-data.coffee', 'health-care-results.json5', 'json-data.json' ]
+      data.assert_Contains [ 'coffee-data', 'health-care-results', 'json-data' ]
       done()
 
   it '/api/v1/file/get/AAAA', (done)->

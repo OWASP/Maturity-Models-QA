@@ -27,7 +27,7 @@ describe 'browser | All-Pages', ->
         done()
 
   it 'open all pages (http)', (done)->                                         # using site hosted at DigitalOcean this test runs in 1.4sec
-    @.timeout 3000
+    @.timeout 5000                                                             # for travis run
     check_Link = (href, next)->                                                # using site hosted at localhost it runs in 680ms
       #console.log "Loading #{href}"
       http.GET href, (html)->

@@ -10,8 +10,12 @@ describe '_Test_APIs | Docker_API', ->
       @.options.assert_Is {}
       @.port.assert_Is    3000
 
-  xit 'server_Url', ->      # unstable until a better way is found to switch between local and cloud server
+  it 'server_Url', (done)->      # unstable until a better way is found to switch between local and cloud server
     using new Docker_API(), ->
+      @.server_Url().GET (html)->
+        html.assert_Is 'Found. Redirecting to d3-radar'
+        done()
+      return
       @.using_Docker_Machine = -> true
       @.server_Url().assert_Is 'http://46.101.86.6'  # using digital ocean image
       #@.server_Url().assert_Is  'http://192.168.99.100:3000'

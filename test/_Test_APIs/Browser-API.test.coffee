@@ -23,8 +23,7 @@ describe '_Test_APIs | Browser_API ...', ->
       done()
 
   it 'html() with Promise', (done)->
-    #
-    browser_API.show()
+    #browser_API.show()
     browser_API.open('/routes').then =>
       browser_API.html().then (html)->
         html.assert_Contains '<title></title>'

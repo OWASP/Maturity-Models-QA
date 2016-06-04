@@ -3,7 +3,7 @@ Browser_API = require '../../src/_Test_APIs/Browser-API'
 
 Spectron_API = require('electrium').Spectron_API
 
-describe '_Test_APIs | browser | Simple-Open_Site', ->
+describe 'browser | Simple-Open_Site', ->
 
   spectron  = null
 

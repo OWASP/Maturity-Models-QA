@@ -26,20 +26,6 @@ describe 'browser | All-Pages', ->
         $('h2').html().assert_Is('Available routes')
         done()
 
-  it 'open all pages (http)', (done)->                                         # using site hosted at DigitalOcean this test runs in 1.4sec
-    @.timeout 5000                                                             # for travis run
-    check_Link = (href, next)->                                                # using site hosted at localhost it runs in 680ms
-      #console.log "Loading #{href}"
-      http.GET href, (html)->
-        html.size().assert_Is_Bigger_Than 3
-        next()
-
-    http.$GET '/view/routes/list ', ($)->
-      links = (link.attribs.href for link in $('a'))
-      links.assert_Is_Bigger_Than 37
-      async.eachSeries links, check_Link, done
-
-
   it 'open all pages (browser and http)', (done)->                            # using site hosted at DigitalOcean this test runs in 16 sec
     @.timeout 40000                                                           #    when running on locahosst this test runs in 12.5 sec
     check_Link = (href, next)->

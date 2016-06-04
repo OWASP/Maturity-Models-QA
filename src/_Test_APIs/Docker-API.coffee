@@ -6,7 +6,7 @@ class Docker_API
 
   server_Url: ()=>
     #return 'http://localhost:3000'        # using local server (manually started)
-    return 'http://46.101.86.6'       # using digital ocean image
+    return 'http://139.59.175.133'       # using digital ocean image
 
     if @.using_Docker_Machine()
       'http://192.168.99.100:3000'  # having some issues with local machine

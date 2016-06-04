@@ -1,40 +1,30 @@
-return
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
-Spectron_API = require('electrium').Spectron_API
-
 describe 'browser | Simple-Open_Site', ->
+  browser = null
 
-  spectron  = null
+  before ()->
+    browser = new Browser_API()
 
-  beforeEach ()->
-    using new Spectron_API(), ->
-      spectron = @
-      @.setup()
-      #@.options.path = @.options.path.remove('electrium/node_modules/').str()  # temp fix for https://github.com/o2platform/electrium/issues/1
-      spectron.options.path = spectron.options.path.remove('electrium/node_modules/').str()
-      spectron.app = new spectron.Application(spectron.options)
-      #@.app = new @.Application(@.options)
-      console.log 'asd 123 aaa'
+    using browser.spectron, ->
+      @.start()
 
-    console.log 'here'
-
-    aaa = spectron.app.start()
-      #.then ()->
-      #  console.log 'spectron started'
-      #.catch (err)->
-      #  console.log 'error: ' + err
-    console.log aaa
-      #.then =>
-      #  @.show()
-
-  afterEach ()->
-    spectron.app.stop()
-      .then ()->
-        console.log 'spectron stopped'
-      .catch (err)->
-        console.log 'error: ' + err
+  after ()->
+    using browser, ->
+      @.spectron?.stop()
 
 
-  it 'open Google',->
-    console.log 'will open google'
+  it 'open /',->
+    #browser.show()
+    browser.open().then ->
+      browser.$html ($)->
+        $.html().assert_Contains("'Earth Results'")
+        return 'ok'
+
+#  it 'get routes list', (done)->
+#    browser.open('/routes').then ->
+#      browser.$html ($)->
+#        $.html().assert_Contains '<h2>Available routes</h2>'
+#        $('a').length.assert_Is_Bigger_Than 37
+#        $('h2').html().assert_Is('Available routes')
+#        done()

@@ -1,7 +1,7 @@
 Http_API    = require '../../src/_Test_APIs/Http-API'
 async       = require 'async'
 
-describe 'browser | All-Pages', ->
+describe 'http | All-Pages', ->
   http    = null
 
   before ()->

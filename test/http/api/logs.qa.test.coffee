@@ -1,6 +1,7 @@
-Http_API  = require '../../src/_Test_APIs/Http-API'
+Http_API  = require '../../../src/_Test_APIs/Http-API'
 
-describe '_qa-tests | logs', ->
+describe 'http | api | logs', ->
+  
   http_API = null
 
   before ()->

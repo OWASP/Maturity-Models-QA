@@ -1,6 +1,6 @@
 Browser_API = require '../../src/_Test_APIs/Browser-API'
 
-describe 'browser | Simple-Open_Site', ->
+xdescribe 'browser | Simple-Open_Site', ->
   browser = null
 
   before ()->
@@ -15,10 +15,10 @@ describe 'browser | Simple-Open_Site', ->
 
 
   it 'open /',->
-    #browser.show()
+    browser.show()
     browser.open().then ->
       browser.$html ($)->
-        $.html().assert_Contains("'Earth Results'")
+        $.html().assert_Contains("MM_Graph")
         return 'ok'
 
 #  it 'get routes list', (done)->

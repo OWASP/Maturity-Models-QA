@@ -15,6 +15,7 @@
     "mocha": "^2.5.2"
   },
   "devDependencies": {
-    "async": "^1.5.2"
+    "async": "^1.5.2",
+    "jsdom": "^9.2.1"
   }
 }

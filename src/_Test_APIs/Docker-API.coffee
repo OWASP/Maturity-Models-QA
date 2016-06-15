@@ -5,16 +5,22 @@ class Docker_API
     @.port    = @.options.port || 3000
 
   server_Url: ()=>
-    #return 'http://localhost:3000'        # using local server (manually started)
-    return 'http://139.59.175.133'       # using digital ocean image
-
-    if @.using_Docker_Machine()
-      'http://192.168.99.100:3000'  # having some issues with local machine
+    if @.in_Travis()
+      return 'http://46.101.86.5'       # using digital ocean image
     else
-      'http://127.0.0.1:3000'
+      return 'http://localhost:3000'        # using local server (manually started)
 
-  using_Docker_Machine: ->
-    docker_Files =  process.env.HOME.path_Combine('.docker/machine/machines/default')
-    return docker_Files.folder_Exists()
+
+#    if @.using_Docker_Machine()
+#      'http://192.168.99.100:3000'  # having some issues with local machine
+#    else
+#      'http://127.0.0.1:3000'
+
+  #using_Docker_Machine: ->
+  #  docker_Files =  process.env.HOME.path_Combine('.docker/machine/machines/default')
+  #  return docker_Files.folder_Exists()
+
+  in_Travis: ->
+    "home/travis".folder_Exists()
 
 module.exports = Docker_API

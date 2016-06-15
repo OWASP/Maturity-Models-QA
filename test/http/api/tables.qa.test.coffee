@@ -6,12 +6,14 @@ describe 'http | api | tables', ->
   before ()->
     http_API = new Http_API()
 
-  it '/view/aaaaa/table', (done)->
-    http_API.$GET '/view/aaaaa/table', ($)->
+  # don't exist anymore
+  xit '/view/aaaaa/table', (done)->
+    http_API.$GET '/api/vi/table/aaaa', ($)->
       $('h2').html().assert_Is 'BSIMM Table for undefined'  # BUG
       done()
-        
-  it '/view/team-A/table', (done)->
+
+  # don't exist anymore
+  xit '/view/team-A/table', (done)->
     http_API.$GET  '/view/team-A/table', ($)->
       $('h2').html().assert_Is 'BSIMM Table for Team A'
       $('th').length.assert_Is 4

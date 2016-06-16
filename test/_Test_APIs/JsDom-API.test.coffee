@@ -23,8 +23,8 @@ describe '_Test_APIs | JsDom_API', ->
   it 'open()', (done)->
     using jsDom_API,->
       @.open ($, window)->
-        window.angular.version.full.assert_Is '1.5.6'
-        window.$.fn.jquery.assert_Is '2.2.4'
+        window.angular.version.full.assert_Is '1.5.7'
+        window.$.fn.jquery.assert_Is '3.0.0'
         (window.$ is $).assert_Is_True()
         $('body').eq(0).parent().html().starts_With('<head><meta class="foundation-mq-small">')
                                        .assert_Is_True()

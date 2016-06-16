@@ -32,10 +32,10 @@ describe '_Test_APIs | JsDom_API', ->
         assert_Is_Undefined window.$('ng-view').eq(0).html()
         done()
 
-  it 'open() with 10ms delay', (done)->
+  it 'open() with 50ms delay', (done)->     # was 10ms locally
     using jsDom_API,->
       @.open ($, window)->
-        10.wait ->
+        50.wait ->
           window.$('ng-view').eq(0).html().assert_Contains '<p>Welcome. Please chose one of the menu options (above)</p>'
           done()
 

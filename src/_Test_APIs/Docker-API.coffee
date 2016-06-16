@@ -21,6 +21,6 @@ class Docker_API
   #  return docker_Files.folder_Exists()
 
   in_Travis: ->
-    "home/travis".folder_Exists()
+    "/home/travis".folder_Exists()
 
 module.exports = Docker_API

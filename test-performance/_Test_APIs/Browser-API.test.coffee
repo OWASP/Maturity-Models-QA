@@ -61,14 +61,14 @@ describe '_Test_APIs | Browser_API ...', ->
       browser_API.open ()->                             # when path is not provided
         done()
 
-  it "open('/routes')", (done)->
-    browser_API.open('/view/routes').then =>
+  it "open('/view/routes')", (done)->
+    browser_API.open('/view/routes').then ->
       browser_API.url (url)->
         url.assert_Is browser_API.url_Target_Site + '/view/routes'
         done()
 
-  #todo: not stable in travis
-  #it 'open() and check angular values', (done)->
+  it 'open() and check angular values', (done)->
+    return done() if browser_API.travis_Api.in_Travis()                        #skip if in travis
     browser_API.show()
     browser_API.open '/view/routes', ->                                 # will fail is something is wrong with the open() call
       browser_API.$html ($)->                                           # before angular digest

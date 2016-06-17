@@ -7,7 +7,8 @@ Spectron_API = require('electrium').Spectron_API
 class Browser_API
 
   constructor: ->
-    @.url_Target_Site = new Travis_API().server_Url()
+    @.travis_Api      = new Travis_API()
+    @.url_Target_Site = @.travis_Api.server_Url()
     @.spectron        = new Spectron_API().setup()
     @.spectron.options.path = @.spectron.options.path.remove('electrium/node_modules/').str() # handle bug in electrium
 
@@ -47,8 +48,12 @@ class Browser_API
 
   url: (callback)=>
     @.html().then ()=>                                      # todo: find why calling the @.html first makes getUrl more robust
-      @.spectron.app.client.getUrl().then (url)->
-        callback(url) if callback
-        return url
+        @.spectron.app.client.getUrl()
+          .then (url)->
+            callback(url) if callback
+            return url
+          .catch (err)->
+            console.log err
+
   #wait_No_Http_Requests: (next)=>                          # todo: implement this method for browser tests
 module.exports = Browser_API

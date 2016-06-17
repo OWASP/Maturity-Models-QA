@@ -18,7 +18,8 @@ describe 'browser | All-Pages', ->
     using browser, ->
       @.spectron?.stop()
 
-  it 'get routes list', (done)->
+  # needs better solution to wait for angular digest to end
+  xit 'get routes list', (done)->
     browser.open('/view/routes').then ->
       500.wait ->
         browser.$html ($)->

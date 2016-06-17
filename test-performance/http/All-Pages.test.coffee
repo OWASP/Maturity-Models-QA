@@ -15,7 +15,6 @@ describe 'http | All-Pages', ->
         html.size().assert_Is_Bigger_Than 3
         next()
 
-    http.$GET '/view/routes/list ', ($)->
-      links = (link.attribs.href for link in $('a'))
-      links.assert_Is_Bigger_Than 37
-      async.eachSeries links, check_Link, done
+    http.GET_Json '/api/v1/routes/list ', (routes)->
+      routes.assert_Is_Bigger_Than 15
+      async.eachSeries routes, check_Link, done

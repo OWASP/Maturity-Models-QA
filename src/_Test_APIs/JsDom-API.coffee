@@ -1,12 +1,12 @@
 require 'fluentnode'
 
-Docker_API  = require './Docker-API'
+Travis_API  = require './Travis-API'
 jsdom       = require('jsdom')
 
 class JsDom_API
 
   constructor: ->
-    @.docker_API = new Docker_API()
+    @.travis_API = new Travis_API()
     @.$          = null
     @.document   = null
     @.window     = null
@@ -37,7 +37,7 @@ class JsDom_API
       features :
         FetchExternalResources  : ["script"]
         ProcessExternalResources: ["script"]
-        SkipExternalResources   : true # was false
+        SkipExternalResources   : true 
       created: ()=> @.on_Created?()
       onload : ()=> @.on_Load?()
       done   : (err, window)=>
@@ -49,18 +49,13 @@ class JsDom_API
     jsdom.env config
 
   server_Url: ->
-    @.docker_API.server_Url()
+    @.travis_API.server_Url()
 
   wait_No_Http_Requests: (next)=>
     if @.$http().pendingRequests.length > 0
-      #console.log @.$http().pendingRequests[0].url
-      #console.log 'waiting 10ms'
       5.wait =>
         @.wait_No_Http_Requests(next)
     else
       next()
-
-  #open: (path)=>
-
 
 module.exports = JsDom_API

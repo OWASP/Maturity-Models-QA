@@ -6,8 +6,6 @@ module.exports = function ( ) {
 
         tests: [
             //'test/**/*.coffee'
-            //'test/browser/All-Pages.test.coffee'
-            //'test/**/JsDom*.coffee'
             'test/jsdom/**/*.coffee'
             //'test/http/**/*.coffee'
         ],

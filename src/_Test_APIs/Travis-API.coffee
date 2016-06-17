@@ -1,4 +1,4 @@
-class Docker_API
+class Travis_API
 
   constructor: (options)->
     @.options = options || {}
@@ -14,4 +14,4 @@ class Docker_API
   in_Travis: ->
     "/home/travis".folder_Exists()
 
-module.exports = Docker_API
+module.exports = Travis_API

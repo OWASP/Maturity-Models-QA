@@ -10,7 +10,7 @@ describe '_Test_APIs | JsDom_API', ->
   it 'constructor', ->
     using jsDom_API,->
       @.constructor.name.assert_Is 'JsDom_API'
-      @.docker_API.constructor.name.assert_Is 'Docker_API'
+      @.travis_API.constructor.name.assert_Is 'Travis_API'
 
   it '$app, $http, $scope', (done)->
     using jsDom_API,->
@@ -32,6 +32,7 @@ describe '_Test_APIs | JsDom_API', ->
         assert_Is_Undefined window.$('ng-view').eq(0).html()
         done()
 
+  #todo: remove test and replace with one that uses   wait_No_Http_Requests
   it 'open() with 250 delay', (done)->     # was 10ms locally
     using jsDom_API,->
       @.open ($, window)->
@@ -41,7 +42,7 @@ describe '_Test_APIs | JsDom_API', ->
 
   it 'server_Url', ->
     using jsDom_API,->
-      @.server_Url().assert_Is @.docker_API.server_Url()
+      @.server_Url().assert_Is @.travis_API.server_Url()
       
   it 'wait_No_Http_Requests', (done)->
     using jsDom_API,->

@@ -1,15 +1,15 @@
 require 'fluentnode'
 
 cheerio    = require 'cheerio'
-Docker_API = require './Docker-API'
+Travis_API = require './Travis-API'
 
 class Http_API
 
   constructor: ->
-    @.docker_API = new Docker_API()
+    @.travis_API = new Travis_API()
     
   GET: (path, callback)=>
-    full_Url = @.docker_API.server_Url() + path
+    full_Url = @.travis_API.server_Url() + path
     full_Url.GET callback
     
   $GET: (path, callback)=>
@@ -17,10 +17,10 @@ class Http_API
       callback cheerio.load data
       
   GET_Json: (path, callback)=>
-    full_Url = @.docker_API.server_Url() + path
+    full_Url = @.travis_API.server_Url() + path
     full_Url.json_GET callback
 
   server_Url: ()=>
-    @.docker_API.server_Url()
+    @.travis_API.server_Url()
 
 module.exports = Http_API

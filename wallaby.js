@@ -5,8 +5,8 @@ module.exports = function ( ) {
         ],
 
         tests: [
-            //'test/**/*.coffee'
-            'test/jsdom/**/*.coffee'
+            'test/**/*.coffee'
+            //'test/jsdom/**/*.coffee'
             //'test/http/**/*.coffee'
         ],
 

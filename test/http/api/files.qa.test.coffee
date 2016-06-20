@@ -9,12 +9,12 @@ describe 'http | api | files', ->
 
 
   it '/api/v1/files/list', (done)->
-    http_API.GET_Json '/api/v1/file/list', (data)->
+    http_API.GET_Json '/api/v1/team/demo/list', (data)->
       data.assert_Contains [ 'coffee-data', 'json-data' ]
       done()
 
   it '/api/v1/file/get/AAAA', (done)->
-    http_API.GET_Json '/api/v1/file/get/AAA', (data)->
+    http_API.GET_Json '/api/v1/team/demo/get/AAA', (data)->
       data.error.assert_Is 'not found'
       done()       
       
@@ -23,17 +23,17 @@ describe 'http | api | files', ->
       file_1 = 'json-data'
       file_2 = 'coffee-data'
 
-      @.GET_Json "/api/v1/file/get/#{file_1}", (data)=>
+      @.GET_Json "/api/v1/team/demo/get/#{file_1}", (data)=>
         data.user.name.assert_Is 'Joe'
 
-        @.GET_Json "/api/v1/file/get/#{file_2}", (data)->
+        @.GET_Json "/api/v1/team/demo/get/#{file_2}", (data)->
           data.user.assert_Is 'in coffee'
           done()
            
   it '/api/v1/file/get/json-data?pretty', (done)->
     using http_API, ->
-      @.GET '/api/v1/file/get/json-data', (data_json)=>
-        @.GET  '/api/v1/file/get/json-data?pretty', (data_pretty)->
+      @.GET '/api/v1/team/demo/get/json-data', (data_json)=>
+        @.GET  '/api/v1/team/demo/get/json-data?pretty', (data_pretty)->
           data_json.str()       .assert_Is_Not data_pretty
           data_json.json_Parse().assert_Is data_pretty.json_Parse()
           done()

@@ -21,5 +21,5 @@ describe 'jsdom | views | projects.page', ->
   it 'check ng-view contents', (done)->
     using jsDom, ->
       @.$('ng-view li').length.assert_Is_Bigger_Than 1
-      @.$('ng-view li').eq(0).html().assert_Is '<a href="project/appsec" class="ng-binding">appsec</a>'
+      @.$('ng-view li').eq(0).html().assert_Is '<a href="view/project/appsec" class="ng-binding">appsec</a>'
       done()

@@ -9,12 +9,12 @@ describe 'http | api | files', ->
 
 
   it '/api/v1/files/list', (done)->
-    http_API.GET_Json '/api/v1/team/demo/list', (data)->
+    http_API.GET_Json '/api/v1/team/bsimm/list', (data)->
       data.assert_Contains [ 'coffee-data', 'json-data' ]
       done()
 
   it '/api/v1/file/get/AAAA', (done)->
-    http_API.GET_Json '/api/v1/team/demo/get/AAA', (data)->
+    http_API.GET_Json '/api/v1/team/bsimm/get/AAA', (data)->
       data.error.assert_Is 'not found'
       done()       
       

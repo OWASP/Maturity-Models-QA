@@ -51,6 +51,6 @@ describe '_Test_APIs | JsDom_API', ->
         @.wait_No_Http_Requests =>
           @.window.$('ng-view').eq(0).html().size().assert_Is_Bigger_Than 6000
           @.window.$('ng-view a').length.assert_Is_Bigger_Than 20
-          @.window.$('ng-view a').eq(1).html().assert_Is '/api/v1/file/get/coffee-data'
+          @.window.$('ng-view a').eq(1).html().assert_Is '/api/v1/data/bsimm/coffee-data/radar'
           done()
         

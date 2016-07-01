@@ -12,7 +12,7 @@ describe 'http | All-Pages', ->
     check_Link = (href, next)->                                                # using site hosted at localhost it runs in 680ms
       #console.log "Loading #{href}"
       http.GET href, (html)->
-        html.size().assert_Is_Bigger_Than 3
+        html.size().assert_Is_Bigger_Than 1
         next()
 
     http.GET_Json '/api/v1/routes/list ', (routes)->

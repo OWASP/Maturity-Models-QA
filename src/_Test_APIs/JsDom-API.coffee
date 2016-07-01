@@ -21,6 +21,9 @@ class JsDom_API
   $http: ()=>
     @.$app().injector().get('$http')
 
+  $location: ()=>
+    @.$app().injector().get('$location')
+
   $scope: ()=>
     @.$app().scope()
     

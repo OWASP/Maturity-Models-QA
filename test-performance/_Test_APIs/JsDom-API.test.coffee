@@ -12,12 +12,15 @@ describe '_Test_APIs | JsDom_API', ->
       @.constructor.name.assert_Is 'JsDom_API'
       @.travis_API.constructor.name.assert_Is 'Travis_API'
 
-  it '$app, $http, $scope', (done)->
+  it '$app, $http, $scope, $location', (done)->
     using jsDom_API,->
       @.open ()=>
         @.$app(  ).                length.assert_Is 1
         @.$http( ).pendingRequests.size().assert_Is 1
         @.$scope().$$watchers     .size().assert_Is 2
+        @.$location().url()   .assert_Is '/view'
+        @.$location().$$absUrl.assert_Is 'http://localhost:3000/view'
+
         done()
 
   it 'open()', (done)->

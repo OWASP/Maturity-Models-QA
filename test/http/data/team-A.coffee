@@ -17,5 +17,5 @@ describe 'http | data | team-A', ->
       using json.activities, ->
         @.Governance['SM.1.1'].assert_Is 'Yes'
         @._keys().assert_Size_Is 4
-        @.Governance._keys().assert_Size_Is 20
+        @.Governance._keys().assert_Size_Is 21
       done()

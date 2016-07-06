@@ -5,7 +5,7 @@ describe 'jsdom | directives | projects.page', ->
   project = 'bsimm'
   team    = 'team-A'
   jsDom   = null
-  page    = "/view/#{project}/#{team}"
+  page    = "/view/#{project}/#{team}/table"
   
   beforeEach (done)->
     jsDom = new JsDom_API()                                   # create JsDom API object
@@ -27,7 +27,7 @@ describe 'jsdom | directives | projects.page', ->
 
       index = 1                                               # this is a really weird timing bug since this check doesn't work here
       #test_Link 'bsimm', "/view/project/#{project}"
-      test_Link 'view' , "/view/#{project}/#{team}"
+      #test_Link 'view' , "/view/#{project}/#{team}"
       test_Link 'table', "/view/#{project}/#{team}/table"
       test_Link 'radar', "/view/#{project}/#{team}/radar"
       test_Link 'edit' , "/view/#{project}/#{team}/edit"

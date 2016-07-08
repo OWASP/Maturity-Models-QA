@@ -1,7 +1,7 @@
 cheerio   = require 'cheerio'
 JsDom_API  = require '../../../src/_Test_APIs/JsDom-API'
 
-describe 'jsdom | views | projects.page', ->
+describe 'jsdom | views | project.page', ->
 
   jsDom = null
   page  = '/view/project/bsimm'

@@ -22,4 +22,13 @@ describe 'jsdom | views | projects.page', ->
     using jsDom, ->
       @.$('ng-view li').length.assert_Is_Bigger_Than 1
       @.$('ng-view li').eq(0).html().assert_Contains '<a href="view/project/appsec" class="ng-binding">appsec</a>'
+      @.$('a').eq(0).attr('href').assert_Is '/view'
+      @.$('a').eq(1).attr('href').assert_Is '/view/projects'
+      @.$('a').eq(2).attr('href').assert_Is '/view/routes'
+      @.$('a').eq(3).attr('href').assert_Is 'view/project/appsec'
+      @.$('a').eq(4).attr('href').assert_Is 'view/project/appsec/schema'
+      @.$('a').eq(5).attr('href').assert_Is 'view/project/appsec/scores'
+      @.$('a').eq(6).attr('href').assert_Is 'view/project/bsimm'
+      @.$('a').eq(7).attr('href').assert_Is 'view/project/bsimm/schema'
+      @.$('a').eq(8).attr('href').assert_Is 'view/project/bsimm/scores'
       done()

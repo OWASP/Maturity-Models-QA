@@ -21,5 +21,5 @@ describe 'jsdom | views | raw.page', ->
 
   it 'check page contents', ()->
     using jsDom, ->
-      @.$('#raw-data').length.assert_Is 1     # confirm element exists
-      @.$('#raw-data').html().assert_Is ''    # confirm it is empty
+      @.$('#data').length.assert_Is 1
+      @.$('#data').html().assert_Contains '"team": "Team A"\n'       

@@ -33,9 +33,12 @@ describe 'jsdom | views | table.page', ->
                                 'Yes', 'No', 'NA', 'Maybe', 'Proof' ]
 
 
-      # level 2 data
+      # level 1 data
       all_Rows  = @.$('#level-1 table tr')
       all_Cells = @.$('#level-1 table td')
 
-      all_Rows.length.assert_Is 1         # this should NOT be 1  (means the only row that exists is the title)
-      all_Cells.length.assert_Is 0        # this should NOT be 0  (means there are no cells
+      all_Rows.length.assert_Is  39
+      all_Cells.length.assert_Is 418
+
+      cell_Values = (@.$(td).text() for td in  @.$('tr[id="SM.1.1"]').find('td'))
+      cell_Values.assert_Is ['1', 'Governance', 'Strategy & Metrics', 'SM.1.1', '1', 'Publish process (roles, responsibilities, plan), evolve as necessary', '', '', '', '',' ']

@@ -15,7 +15,6 @@ describe 'http | data | team-A', ->
     http_API.GET_Json "/api/v1/team/#{project}/get/#{team}", (json)->
       json.metadata.team.assert_Is 'Team A'
       using json.activities, ->
-        @.Governance['SM.1.1'].assert_Is 'Yes'
-        @._keys().assert_Size_Is 4
-        @.Governance._keys().assert_Size_Is 21
+        @['SM.1.1'].assert_Is 'Yes'
+        @._keys().assert_Size_Is 74
       done()

@@ -32,10 +32,10 @@ describe 'jsdom | views | project-scores.page', ->
       all_Rows  = @.$('table tr')
       all_Cells = @.$('table td')
 
-      all_Rows .length.assert_Is 11
-      all_Cells.length.assert_Is 50
+      all_Rows .length.assert_Is 9
+      all_Cells.length.assert_Is 40
 
       @.$('#empty'  ).text().assert_Is 'emptyempty 0% 0% 0%'
-      @.$('#level-1').text().assert_Is 'level-1level-1 71% 5% 0%'
-      @.$('#team-A' ).text().assert_Is 'team-Ateam-A 48% 35% 12%'
-      @.$('#team-B' ).text().assert_Is 'team-Bteam-B 26% 28% 12%'
+      @.$('#level-1').text().assert_Is 'level-1level-1 74% 5% 0%'
+      @.$('#team-A' ).text().assert_Is 'team-Ateam-A 48% 35% 15%'
+      @.$('#team-B' ).text().assert_Is 'team-Bteam-B 26% 28% 13%'

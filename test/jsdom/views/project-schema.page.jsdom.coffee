@@ -22,7 +22,7 @@ describe 'jsdom | views | project-schema.page', ->
   it 'check page contents', ()->
     using jsDom, ->
       # check title
-      @.$('h4').text().assert_Is 'Schema for Project bsimm -  activities'
+      @.$('h4').text().assert_Is 'Schema for Project bsimm - 112 activities'
 
       # check table headers
       table_Headers = (@.$(th).html() for th in @.$('table th'))

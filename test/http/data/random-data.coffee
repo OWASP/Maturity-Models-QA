@@ -18,17 +18,10 @@ describe 'http | data | team-random', ->
 
       matches = { Yes: 0, No : 0, NA: 0, Maybe: 0}
 
-      check_Domain = (domain, size)->
-        for activity, value of json.activities[domain]
-          matches._keys().assert_Contains value
-          matches[value]++
-
-        json.activities[domain]._keys().size().assert_Is size
-
-      check_Domain 'Governance'  , 20
-      check_Domain 'Intelligence', 15
-      check_Domain 'SSDL'        , 15
-      check_Domain 'Deployment'  , 19
+      for activity, value of json.activities
+        matches._keys().assert_Contains value
+        matches[value]++
+      json.activities._keys().size().assert_Is 69
 
       for key,value of matches            # check that we have at least one
         value.assert_Is_Bigger_Than 0

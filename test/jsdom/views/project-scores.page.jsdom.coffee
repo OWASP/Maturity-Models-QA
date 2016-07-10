@@ -19,7 +19,7 @@ describe 'jsdom | views | project-scores.page', ->
       @.$('.top-bar a').eq(1).attr('href').assert_Is '/view/projects'
       @.$('.top-bar a').eq(2).attr('href').assert_Is '/view/routes'
 
-  it.only 'check page contents', ()->
+  it 'check page contents', ()->
     using jsDom, ->
       # check title
       @.$('h3').text().assert_Is 'All team scores for bsimm'

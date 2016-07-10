@@ -1,4 +1,3 @@
-cheerio   = require 'cheerio'
 JsDom_API  = require '../../../src/_Test_APIs/JsDom-API'
 
 describe 'jsdom | views | edit.page', ->
@@ -9,7 +8,7 @@ describe 'jsdom | views | edit.page', ->
   before (done)->
     jsDom = new JsDom_API()
     jsDom.open page, ->
-      jsDom.wait_No_Http_Requests -> 
+      jsDom.wait_No_Http_Requests ->  
         done()
 
   it 'check menu was loaded ok', ()->
@@ -22,18 +21,44 @@ describe 'jsdom | views | edit.page', ->
   it 'check page contents', ()->
     using jsDom, ->
       table_Headers = (@.$(th).html() for th in @.$('table th'))
-      table_Headers.size().assert_Is 20                        # this is wrong
+      table_Headers.size().assert_Is 20
+      table_Headers.assert_Contains ['ID', 'Yes', 'No', 'NA','Maybe']
 
-      #table_Headers.assert_Is [ '#', 'Domain', 'Practice', 'Activity', 'Level', 'Question',
-      #                          'Yes', 'No', 'NA', 'Maybe', 'Proof' ]
+      all_Rows  = @.$('table tr')
+      all_Cells = @.$('table td')
+
+      all_Rows.length.assert_Is  120
+      all_Cells.length.assert_Is 560
+
+      @.$('#save-data').html().assert_Is 'save'         # save button
+      @.$('#team-name').val() .assert_Is 'Team A'       # team name input fie
+      @.$('#message'  ).html().assert_Is 'data loaded'  # status message
+      @.$('#domain'   ).text().assert_Is 'Governance'   # save button
+
+      using @.$('tr[id="SM.1.1"] td'),->
+        @.length.assert_Is 5
+        @.eq(0).html().assert_Is 'SM.1.1'
+        @.eq(1).html().assert_Is '<input type="radio" ng-name="key" ng-model="data[key]" value="Yes" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="26">'
+        @.eq(1).find('input').val().assert_Is 'Yes'
+        @.eq(2).find('input').val().assert_Is 'No'
+        @.eq(3).find('input').val().assert_Is 'NA'
+        @.eq(4).find('input').val().assert_Is 'Maybe'
+
+  it 'check team name value',->
+    using jsDom, ->
+      original_Value = 'Team A'
+      new_Value      = 'Team abc'
+
+      team_Name = @.window.angular.element(@.$('#team-name'))     # get the angular element
+      scope     = team_Name.scope()                               # get the scope
+
+      scope.metadata.team.assert_Is original_Value                # check value in scope
+      team_Name.val()    .assert_Is original_Value                # check value in element
 
 
-#      # level 1 data
-#      all_Rows  = @.$('#level-1 table tr')
-#      all_Cells = @.$('#level-1 table td')
-#
-#      all_Rows.length.assert_Is  39
-#      all_Cells.length.assert_Is 418
-#
-#      cell_Values = (@.$(td).text() for td in  @.$('tr[id="SM.1.1"]').find('td'))
-#      cell_Values.assert_Is ['1', 'Governance', 'Strategy & Metrics', 'SM.1.1', '1', 'Publish process (roles, responsibilities, plan), evolve as necessary', '', '', '', '',' ']
+
+      team_Name.val(new_Value)                                    # change value in element
+               .triggerHandler('input')                           # will trigger a digest
+
+      team_Name.val()    .assert_Is new_Value                     # confirm change in element
+      scope.metadata.team.assert_Is new_Value                     # confirm change in scope

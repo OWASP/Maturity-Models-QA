@@ -62,3 +62,11 @@ describe 'jsdom | views | edit.page', ->
 
       team_Name.val()    .assert_Is new_Value                     # confirm change in element
       scope.metadata.team.assert_Is new_Value                     # confirm change in scope
+
+  it 'Check save message', (done)->
+    using jsDom, ->
+      @.$('#message').html().assert_Is 'data loaded'                       # message before save
+      @.window.angular.element(@.$('#save-data')).triggerHandler('click')  # this is what triggers the .click() event
+      @.wait_No_Http_Requests =>                                           # wait for http requests
+        @.$('#message'  ).html().assert_Is 'file saved ok'                 # message after save
+        done()

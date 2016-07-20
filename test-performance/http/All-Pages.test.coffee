@@ -7,14 +7,15 @@ describe 'http | All-Pages', ->
   before ()->
     http    = new Http_API()
 
-  it 'open all pages (http)', (done)->                                         # using site hosted at DigitalOcean this test runs in 1.4sec
+  # todo don't invoke the delete method or this will delete all files
+  xit 'open all pages (http)', (done)->                                         # using site hosted at DigitalOcean this test runs in 1.4sec
     @.timeout 10000                                                            # for travis run
     check_Link = (href, next)->                                                # using site hosted at localhost it runs in 680ms
-      #console.log "Loading #{href}"
+      console.log "Loading #{href}"
       http.GET href, (html)->
         html.size().assert_Is_Bigger_Than 1
         next()
 
-    http.GET_Json '/api/v1/routes/list ', (routes)->
-      routes.assert_Is_Bigger_Than 15
-      async.eachSeries routes, check_Link, done
+    http.GET_Json '/api/v1/routes ', (routes)->
+      routes.fixed.assert_Is_Bigger_Than 15
+      async.eachSeries routes.fixed, check_Link, done

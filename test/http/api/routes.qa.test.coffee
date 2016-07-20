@@ -16,10 +16,25 @@ describe 'http | api | routes', ->
       data.assert_Is 'pong'
       done()
 
-  it '/api/v1/routes/list', (done)->
-    http_API.GET_Json '/api/v1/routes/list', (data)->
+  it '/api/v1/routes', (done)->
+    http_API.GET_Json '/api/v1/routes', (data)->
       using data , ->
-        @.assert_Contains ['/ping', '/view*']
+        @.raw.assert_Contains ['/ping', '/view*']
+        @.raw.assert_Is_Greater_Than 4
+        @.fixed.assert_Is_Greater_Than 4
+      done()
+
+  it '/api/v1/routes/list-raw', (done)->
+    http_API.GET_Json '/api/v1/routes/list-raw', (data)->
+      using data , ->
+        @.assert_Contains ['/ping', '/view*', '/api/v1/team/:project/get/:team']
+        @.assert_Is_Greater_Than 4
+      done()
+
+  it '/api/v1/routes/list-fixed', (done)->
+    http_API.GET_Json '/api/v1/routes/list-fixed', (data)->
+      using data , ->
+        @.assert_Contains ['/ping', '/api/v1/team/bsimm/get/team-A']
         @.assert_Is_Greater_Than 4
       done()
 

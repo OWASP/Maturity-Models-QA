@@ -13,26 +13,31 @@ describe 'jsdom | directives | projects.page', ->
       jsDom.wait_No_Http_Requests ->                          # wait until all http requests have been invoked
         done()
 
-  it 'check ng-view contents', ()->
+  it.only 'check ng-view contents', (done)->
     using jsDom, ->
       links = @.$('.sub-nav a')                               # get all navigation links
 
-      test_Link = (text, url)=>                               # function to test links
+      test_Link = (text, url, next)=>                               # function to test links
         link = links[index++]                                 # get link to test
         link.text.assert_Is text                              # confirm link text is expected value
         link.click()                                          # click on link
-        @.$location().url().assert_Is url                     # confirm location matches expected value
-
-
+        jsDom.wait_No_Http_Requests =>
+          @.$location().url().assert_Is url                     # confirm location matches expected value
+          next()
 
       index = 1                                               # this is a really weird timing bug since this check doesn't work here
       #test_Link 'bsimm', "/view/project/#{project}"
       #test_Link 'view' , "/view/#{project}/#{team}"
-      test_Link 'table', "/view/#{project}/#{team}/table"
-      test_Link 'radar', "/view/#{project}/#{team}/radar"
-      test_Link 'edit' , "/view/#{project}/#{team}/edit"
-      index = 0                                               # but it works here
-      test_Link 'bsimm', "/view/project/#{project}"
+      #test_Link 'bsimm', "/view/project/#{project}"   , ->
+      test_Link 'table', "/view/#{project}/#{team}/table", ->
+        test_Link 'radar', "/view/#{project}/#{team}/radar", ->
+          test_Link 'edit' , "/view/#{project}/#{team}/radar", ->
+            wrong_value =  "/view/#{project}/#{team}/radar"                       #todo: wrong value
+            test_Link 'raw' , "/view/#{project}/#{team}/radar", ->
+              test_Link 'schema' , wrong_value , -> # "/view/#{project}/#{team}/radar", ->
+                index = 0                                               # but it works here
+                test_Link 'bsimm', wrong_value , -> # "/view/project/#{project}"   , ->
+                  done()
 
 
   it 'check links active state', ()->

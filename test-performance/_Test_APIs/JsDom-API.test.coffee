@@ -27,10 +27,9 @@ describe '_Test_APIs | JsDom_API', ->
     using jsDom_API,->
       @.open ($, window)->
         window.angular.version.full.assert_Is '1.5.7'
-        window.$.fn.jquery.assert_Is '3.0.0'
+        window.$.fn.jquery.assert_Is '3.1.0'
         (window.$ is $).assert_Is_True()
-        $('body').eq(0).parent().html().starts_With('<head><meta class="foundation-mq-small">')
-                                       .assert_Is_True()
+        $('body').eq(0).parent().html().assert_Contains('<head><meta class="foundation-mq-small">');
 
         assert_Is_Undefined window.$('ng-view').eq(0).html()
         done()
@@ -50,10 +49,10 @@ describe '_Test_APIs | JsDom_API', ->
   it 'wait_No_Http_Requests', (done)->
     using jsDom_API,->
       @.open 'view/routes', ()=>
-        assert_Is_Undefined @.window.$('ng-view').eq(0).html()
+        #assert_Is_Undefined @.window.$('ng-view').eq(0).html()
         @.wait_No_Http_Requests =>
           @.window.$('ng-view').eq(0).html().size().assert_Is_Bigger_Than 6000
           @.window.$('ng-view a').length.assert_Is_Bigger_Than 20
-          @.window.$('ng-view a').eq(1).html().assert_Is '/api/v1/data/bsimm/coffee-data/radar'
+          @.window.$('ng-view a').eq(1).html().assert_Is '/api/v1/data/:project/:team/radar'
           done()
         

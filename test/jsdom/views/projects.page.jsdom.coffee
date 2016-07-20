@@ -15,7 +15,7 @@ describe 'jsdom | views | projects.page', ->
   it 'check jsdom loaded ok',->
     using jsDom, ->
       @.$app().length.assert_Is 1
-      @.$.fn.jquery.assert_Is '3.0.0'
+      @.$.fn.jquery.assert_Is '3.1.0'
       @.$http().pendingRequests.size().assert_Is 0
 
   it 'check ng-view contents', (done)->
@@ -26,9 +26,5 @@ describe 'jsdom | views | projects.page', ->
       @.$('a').eq(1).attr('href').assert_Is '/view/projects'
       @.$('a').eq(2).attr('href').assert_Is '/view/routes'
       @.$('a').eq(3).attr('href').assert_Is 'view/project/bsimm'
-      @.$('a').eq(4).attr('href').assert_Is 'view/project/bsimm/schema'
-      @.$('a').eq(5).attr('href').assert_Is 'view/project/bsimm/scores'
-      @.$('a').eq(6).attr('href').assert_Is 'view/project/samm'
-      @.$('a').eq(7).attr('href').assert_Is 'view/project/samm/schema'
-      @.$('a').eq(8).attr('href').assert_Is 'view/project/samm/scores'
+      @.$('a').eq(4).attr('href').assert_Is 'view/project/samm'
       done()

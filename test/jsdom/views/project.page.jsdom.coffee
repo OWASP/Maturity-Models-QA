@@ -18,10 +18,10 @@ describe 'jsdom | views | project.page', ->
       @.$('a').eq(0).attr('href').assert_Is '/view'
       @.$('a').eq(1).attr('href').assert_Is '/view/projects'
       @.$('a').eq(2).attr('href').assert_Is '/view/routes'
-      @.$('a').eq(3).attr('href').assert_Is 'view/bsimm/empty/table'
-      @.$('a').eq(4).attr('href').assert_Is 'view/bsimm/level-1/table'
+      @.$('a').eq(3).attr('href').assert_Is "view/project/bsimm/schema"
+      @.$('a').eq(4).attr('href').assert_Is "view/project/bsimm/scores"
 
       teams =  (@.$(a).html() for a in @.$('#project li a'))
-      teams.assert_Is [ 'empty', 'level-1', 'level-2', 'save-test',
-                        'team-A', 'team-B', 'team-C', 'team-random' ]
+      teams.assert_Contains [ 'empty', 'level-1', 'level-2', 'save-test',
+                              'team-A', 'team-B', 'team-C', 'team-random' ]
       done()

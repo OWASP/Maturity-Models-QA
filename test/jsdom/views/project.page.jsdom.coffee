@@ -22,6 +22,6 @@ describe 'jsdom | views | project.page', ->
       @.$('a').eq(4).attr('href').assert_Is "view/project/bsimm/scores"
 
       teams =  (@.$(a).html() for a in @.$('#project li a'))
-      teams.assert_Contains [ 'empty', 'level-1', 'level-2', 'save-test',
+      teams.assert_Contains [ 'level-1', 'level-2', 'save-test',
                               'team-A', 'team-B', 'team-C', 'team-random' ]
       done()

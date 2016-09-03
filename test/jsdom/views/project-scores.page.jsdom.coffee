@@ -35,7 +35,6 @@ describe 'jsdom | views | project-scores.page', ->
       all_Rows .length.assert_Is_Bigger_Than 9
       all_Cells.length.assert_Is_Bigger_Than 40
 
-      @.$('#empty'  ).text().assert_Is 'emptyempty 0% 0% 0%'
       @.$('#level-1').text().assert_Is 'level-1level-1 74% 5% 0%'
       @.$('#team-A' ).text().assert_Is 'team-Ateam-A 48% 35% 15%'
       @.$('#team-B' ).text().assert_Is 'team-Bteam-B 26% 28% 13%'

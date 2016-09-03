@@ -13,7 +13,7 @@ describe 'jsdom | directives | projects.page', ->
       jsDom.wait_No_Http_Requests ->                          # wait until all http requests have been invoked
         done()
 
-  it.only 'check ng-view contents', (done)->
+  it 'check ng-view contents', (done)->
     using jsDom, ->
       links = @.$('.sub-nav a')                               # get all navigation links
 

@@ -3,6 +3,7 @@ require 'fluentnode'
 Travis_API  = require './Travis-API'
 jsdom       = require('jsdom')
 
+# Add feature to JsDom-API to capture requests made #157 - https://github.com/OWASP/Maturity-Models/issues/157
 class JsDom_API
 
   constructor: ->
@@ -56,7 +57,8 @@ class JsDom_API
 
   wait_No_Http_Requests: (next)=>
     if @.$http().pendingRequests.length > 0
-      5.wait =>
+      #console.log @.$http().pendingRequests
+      5.wait =>        
         @.wait_No_Http_Requests(next)
     else
       next()

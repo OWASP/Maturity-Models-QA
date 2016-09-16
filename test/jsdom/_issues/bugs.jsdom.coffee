@@ -11,7 +11,7 @@ describe 'jsdom | bugs', ->
       jsDom.wait_No_Http_Requests ->
         done()
 
-  xit 'Issue 120 - Save is broken ',->
+  it.only 'Issue 120 - Save is broken ',->
     using jsDom, ->
       original_Value = 'SAMM - team F'
       new_Value      = 'team abc'

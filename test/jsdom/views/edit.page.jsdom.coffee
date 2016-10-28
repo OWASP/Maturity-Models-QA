@@ -2,13 +2,16 @@ JsDom_API  = require '../../../src/_Test_APIs/JsDom-API'
 
 describe 'jsdom | views | edit.page', ->
 
+
+describe 'jsdom | views | edit.page', ->
+
   jsDom = null
   page  = '/view/bsimm/team-A/edit'
   
   before (done)->
     jsDom = new JsDom_API()
     jsDom.open page, ->
-      jsDom.wait_No_Http_Requests ->  
+      jsDom.wait_No_Http_Requests ->
         done()
 
   it 'check menu was loaded ok', ()->
@@ -30,15 +33,16 @@ describe 'jsdom | views | edit.page', ->
       all_Rows.length.assert_Is  120
       all_Cells.length.assert_Is 560
 
-      @.$('#save-data').html().assert_Is 'save'         # save button
-      @.$('#team-name').val() .assert_Is 'Team A'       # team name input fie
-      @.$('#message'  ).html().assert_Is 'data loaded'  # status message
-      @.$('#domain'   ).text().assert_Is 'Governance'   # save button
+      @.$('#save-button' ).html().assert_Is 'save'         # save button
+      @.$('#team-name'   ).val() .assert_Is 'Team A'       # team name input fie
+      @.$('#status-label').html().assert_Is 'data loaded'  # status message
+      @.$('#domain'      ).text().assert_Is 'Governance'   # save button
 
       using @.$('tr[id="SM.1.1"] td'),->
         @.length.assert_Is 5
         @.eq(0).html().assert_Is 'SM.1.1'
-        @.eq(1).html().assert_Is '<input type="radio" ng-name="activity" ng-model="data.activities[activity]" value="Yes" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="26">'
+        @.eq(1).html()
+        @.eq(1).html().assert_Is '<input type="radio" ng-name="activity" ng-model="data.activities[activity]" value="Yes" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="28">'
         @.eq(1).find('input').val().assert_Is 'Yes'
         @.eq(2).find('input').val().assert_Is 'No'
         @.eq(3).find('input').val().assert_Is 'NA'

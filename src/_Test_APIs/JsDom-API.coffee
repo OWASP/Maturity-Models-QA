@@ -55,9 +55,13 @@ class JsDom_API
   server_Url: ->
     @.travis_API.server_Url()
 
+  count = 0
   wait_No_Http_Requests: (next)=>
     if @.$http().pendingRequests.length > 0
-      #console.log @.$http().pendingRequests
+      console.log "***** pending: " + @.$http().pendingRequests.length + " : " + count++
+      for item in @.$http().pendingRequests
+        console.log "    - " + item.url
+        #console.log @.$http().pendingRequests
       5.wait =>        
         @.wait_No_Http_Requests(next)
     else
